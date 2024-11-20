@@ -5,10 +5,12 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "comment")
 public class Comment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "text")
+
+    @Column(name = "text", nullable = false)
     private String text;
 
     @ManyToOne(fetch = FetchType.LAZY)
