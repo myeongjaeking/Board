@@ -42,8 +42,8 @@ public class Board {
         this.likeCount = 0;
     }
 
-    public static BoardBuilder createBoard() {
-        return Board.create();
+    public void incrementViewCount() {
+        this.viewCount++;
     }
 
 }
