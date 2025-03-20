@@ -46,4 +46,9 @@ public class Board {
         this.viewCount++;
     }
 
+    public void update(String title,String content){
+        this.title = title;
+        this.content = content;
+    }
+
 }

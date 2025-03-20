@@ -1,8 +1,8 @@
 package com.example.board.board.controller;
 
-import com.example.board.board.dto.request.BoardRequest;
+import com.example.board.board.dto.request.BoardCreateRequest;
+import com.example.board.board.dto.request.BoardUpdateRequest;
 import com.example.board.board.dto.response.BoardGetResponse;
-import com.example.board.board.entity.Board;
 import com.example.board.board.service.BoardService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,17 +17,26 @@ public class BoardController {
     private final BoardService boardService;
 
     @PostMapping("/board/create")
-    public ResponseEntity<Board> createBoard(@Valid @RequestBody BoardRequest boardRequest) {
-        Board board = boardService.create(boardRequest);
+    public ResponseEntity<BoardGetResponse> create(@Valid @RequestBody BoardCreateRequest boardCreateRequest) {
+        BoardGetResponse boardGetResponse = boardService.create(boardCreateRequest);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(board);
+        return ResponseEntity.status(HttpStatus.CREATED).body(boardGetResponse);
     }
 
     @GetMapping("/board/{id}")
-    public ResponseEntity<BoardGetResponse> readBoard(@PathVariable("id") Long id) {
+    public ResponseEntity<BoardGetResponse> read(@PathVariable("id") Long id) {
         BoardGetResponse boardGetResponse = boardService.read(id);
 
         return ResponseEntity.status(HttpStatus.OK).body(boardGetResponse);
     }
+
+    @PatchMapping("/board/{id}")
+    public ResponseEntity<BoardGetResponse> update(@PathVariable("id") Long id, @RequestBody @Valid BoardUpdateRequest boardUpdateRequest) {
+        BoardGetResponse boardGetResponse = boardService.update(id, boardUpdateRequest);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(boardGetResponse);
+    }
+
+
 
 }
