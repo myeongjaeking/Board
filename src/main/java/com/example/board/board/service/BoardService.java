@@ -16,7 +16,7 @@ public class BoardService {
     private final BoardRepository boardRepository;
 
     @Transactional
-    public BoardGetResponse create(BoardCreateRequest boardCreateRequest){
+    public BoardGetResponse create(BoardCreateRequest boardCreateRequest) {
         Board board = Board.create()
                 .title(boardCreateRequest.title())
                 .content(boardCreateRequest.content())
@@ -33,7 +33,7 @@ public class BoardService {
     }
 
     @Transactional
-    public BoardGetResponse read(Long id){
+    public BoardGetResponse read(Long id) {
         Board board = boardRepository.findById(id);
 
         board.incrementViewCount();
@@ -48,7 +48,7 @@ public class BoardService {
     }
 
     @Transactional
-    public BoardGetResponse update(Long id, BoardUpdateRequest boardUpdateRequest){
+    public BoardGetResponse update(Long id, BoardUpdateRequest boardUpdateRequest) {
         Board board = boardRepository.findById(id);
         board.update(boardUpdateRequest.title(), boardUpdateRequest.content());
 
@@ -59,6 +59,13 @@ public class BoardService {
                 .viewCount(board.getViewCount())
                 .likeCount(board.getLikeCount())
                 .build();
+    }
+
+    @Transactional
+    public Long delete(Long id){
+        boardRepository.delete(id);
+
+        return id;
     }
 
 }

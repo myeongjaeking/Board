@@ -28,4 +28,15 @@ public class BoardRepository {
         return optionalBoard.get();
     }
 
+    public Long delete(Long id){
+        Optional<Board> optionalBoard = boardJpaRepository.findById(id);
+        if(optionalBoard.isEmpty()){
+            throw new CustomException(NOT_FOUND_BOARD);
+        }
+
+        boardJpaRepository.deleteById(id);
+
+        return id;
+    }
+
 }

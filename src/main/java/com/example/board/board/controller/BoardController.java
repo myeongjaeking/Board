@@ -27,7 +27,7 @@ public class BoardController {
     public ResponseEntity<BoardGetResponse> read(@PathVariable("id") Long id) {
         BoardGetResponse boardGetResponse = boardService.read(id);
 
-        return ResponseEntity.status(HttpStatus.OK).body(boardGetResponse);
+        return ResponseEntity.status(HttpStatus.FOUND).body(boardGetResponse);
     }
 
     @PatchMapping("/board/{id}")
@@ -37,6 +37,11 @@ public class BoardController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(boardGetResponse);
     }
 
+    @DeleteMapping("/board/{id}")
+    public ResponseEntity<Long> delete(@PathVariable("id")Long id){
+        Long boardId = boardService.delete(id);
 
+        return ResponseEntity.status(HttpStatus.OK).body(boardId);
+    }
 
 }
