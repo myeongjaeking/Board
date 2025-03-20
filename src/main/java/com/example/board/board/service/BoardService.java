@@ -26,13 +26,7 @@ public class BoardService {
         .build();
     boardRepository.save(board);
 
-    return BoardGetResponse.builder()
-        .title(board.getTitle())
-        .content(board.getContent())
-        .createTime(board.getCreateTime())
-        .viewCount(board.getViewCount())
-        .likeCount(board.getLikeCount())
-        .build();
+    return BoardGetResponse.from(board);
   }
 
   @Transactional
@@ -41,13 +35,7 @@ public class BoardService {
 
     board.incrementViewCount();
 
-    return BoardGetResponse.builder()
-        .title(board.getTitle())
-        .content(board.getContent())
-        .createTime(board.getCreateTime())
-        .viewCount(board.getViewCount())
-        .likeCount(board.getLikeCount())
-        .build();
+    return BoardGetResponse.from(board);
   }
 
   @Transactional
@@ -55,13 +43,7 @@ public class BoardService {
     Board board = boardRepository.findById(id);
     board.update(boardUpdateRequest.title(), boardUpdateRequest.content());
 
-    return BoardGetResponse.builder()
-        .title(board.getTitle())
-        .content(board.getContent())
-        .createTime(board.getCreateTime())
-        .viewCount(board.getViewCount())
-        .likeCount(board.getLikeCount())
-        .build();
+    return BoardGetResponse.from(board);
   }
 
   @Transactional

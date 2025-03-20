@@ -1,5 +1,6 @@
 package com.example.board.board.dto.response;
 
+import com.example.board.board.entity.Board;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
@@ -12,5 +13,15 @@ public record BoardGetResponse(
     int viewCount,
     int likeCount
 ) {
+
+  public static BoardGetResponse from(Board board) {
+    return BoardGetResponse.builder()
+        .title(board.getTitle())
+        .content(board.getContent())
+        .createTime(board.getCreateTime())
+        .viewCount(board.getViewCount())
+        .likeCount(board.getLikeCount())
+        .build();
+  }
 
 }

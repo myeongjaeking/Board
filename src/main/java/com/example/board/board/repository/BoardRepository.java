@@ -22,19 +22,11 @@ public class BoardRepository {
   }
 
   public Board findById(Long id) {
-    Optional<Board> optionalBoard = boardJpaRepository.findById(id);
-    if (optionalBoard.isEmpty()) {
-      throw new CustomException(NOT_FOUND_BOARD);
-    }
-
-    return optionalBoard.get();
+    return boardJpaRepository.findById(id).orElseThrow(() -> new CustomException(NOT_FOUND_BOARD));
   }
 
   public void delete(Long id) {
-    Optional<Board> optionalBoard = boardJpaRepository.findById(id);
-    if (optionalBoard.isEmpty()) {
-      throw new CustomException(NOT_FOUND_BOARD);
-    }
+    boardJpaRepository.findById(id).orElseThrow(() -> new CustomException(NOT_FOUND_BOARD));
 
     boardJpaRepository.deleteById(id);
   }
