@@ -21,16 +21,16 @@ public class Board {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "content", nullable = false)
+    @Column(name = "content", columnDefinition = "TEXT")
     private String content;
 
-    @Column(name = "view_count")
+    @Column(name = "view_count", nullable = false)
     private int viewCount;
 
-    @Column(name = "like_count")
+    @Column(name = "like_count", nullable = false)
     private int likeCount;
 
-    @Column(name = "create_time")
+    @Column(name = "create_time", nullable = false)
     private LocalDateTime createTime;
 
     @Builder(builderMethodName = "create")
