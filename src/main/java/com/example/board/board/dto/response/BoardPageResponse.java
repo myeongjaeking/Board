@@ -5,12 +5,11 @@ import lombok.Builder;
 import java.time.LocalDateTime;
 
 @Builder
-public record BoardGetResponse(
+public record BoardPageResponse(
     String title,
-    String content,
+    Long id,
     LocalDateTime createTime,
-    int viewCount,
-    int likeCount
+    int viewCount
 ) {
 
 }

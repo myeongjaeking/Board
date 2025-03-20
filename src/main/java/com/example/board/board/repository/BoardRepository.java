@@ -3,6 +3,8 @@ package com.example.board.board.repository;
 import com.example.board.board.entity.Board;
 import com.example.board.global.exception.CustomException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -13,30 +15,32 @@ import static com.example.board.global.exception.GlobalExceptionCode.NOT_FOUND_B
 @RequiredArgsConstructor
 public class BoardRepository {
 
-    private final BoardJpaRepository boardJpaRepository;
+  private final BoardJpaRepository boardJpaRepository;
 
-    public void save(Board board) {
-        boardJpaRepository.save(board);
+  public void save(Board board) {
+    boardJpaRepository.save(board);
+  }
+
+  public Board findById(Long id) {
+    Optional<Board> optionalBoard = boardJpaRepository.findById(id);
+    if (optionalBoard.isEmpty()) {
+      throw new CustomException(NOT_FOUND_BOARD);
     }
 
-    public Board findById(Long id){
-        Optional<Board> optionalBoard = boardJpaRepository.findById(id);
-        if(optionalBoard.isEmpty()){
-            throw new CustomException(NOT_FOUND_BOARD);
-        }
+    return optionalBoard.get();
+  }
 
-        return optionalBoard.get();
+  public void delete(Long id) {
+    Optional<Board> optionalBoard = boardJpaRepository.findById(id);
+    if (optionalBoard.isEmpty()) {
+      throw new CustomException(NOT_FOUND_BOARD);
     }
 
-    public Long delete(Long id){
-        Optional<Board> optionalBoard = boardJpaRepository.findById(id);
-        if(optionalBoard.isEmpty()){
-            throw new CustomException(NOT_FOUND_BOARD);
-        }
+    boardJpaRepository.deleteById(id);
+  }
 
-        boardJpaRepository.deleteById(id);
-
-        return id;
-    }
+  public Page<Board> findAll(Pageable pageable) {
+    return boardJpaRepository.findAll(pageable);
+  }
 
 }

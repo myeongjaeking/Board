@@ -14,41 +14,41 @@ import java.time.LocalDateTime;
 @Entity
 public class Board {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(name = "title", nullable = false)
-    private String title;
+  @Column(name = "title", nullable = false)
+  private String title;
 
-    @Column(name = "content", columnDefinition = "TEXT")
-    private String content;
+  @Column(name = "content", columnDefinition = "TEXT")
+  private String content;
 
-    @Column(name = "view_count", nullable = false)
-    private int viewCount;
+  @Column(name = "view_count", nullable = false)
+  private int viewCount;
 
-    @Column(name = "like_count", nullable = false)
-    private int likeCount;
+  @Column(name = "like_count", nullable = false)
+  private int likeCount;
 
-    @Column(name = "create_time", nullable = false)
-    private LocalDateTime createTime;
+  @Column(name = "create_time", nullable = false)
+  private LocalDateTime createTime;
 
-    @Builder(builderMethodName = "create")
-    public Board(String title, String content) {
-        this.title = title;
-        this.content = content;
-        this.createTime = LocalDateTime.now();
-        this.viewCount = 0;
-        this.likeCount = 0;
-    }
+  @Builder(builderMethodName = "create")
+  public Board(String title, String content) {
+    this.title = title;
+    this.content = content;
+    this.createTime = LocalDateTime.now();
+    this.viewCount = 0;
+    this.likeCount = 0;
+  }
 
-    public void incrementViewCount() {
-        this.viewCount++;
-    }
+  public void incrementViewCount() {
+    this.viewCount++;
+  }
 
-    public void update(String title,String content){
-        this.title = title;
-        this.content = content;
-    }
+  public void update(String title, String content) {
+    this.title = title;
+    this.content = content;
+  }
 
 }
