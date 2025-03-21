@@ -2,6 +2,8 @@ package com.example.board.member.service;
 
 import com.example.board.global.config.jwt.SecurityUtil;
 import com.example.board.member.dto.request.MemberCreateRequest;
+import com.example.board.member.dto.request.MemberUpdateNicknameRequest;
+import com.example.board.member.dto.response.MemberGetResponse;
 import com.example.board.member.entity.Member;
 import com.example.board.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -50,10 +52,16 @@ public class MemberService {
     return memberRepository.findByEmail(email);
   }
 
-  public Long getMemberId() {
+  public MemberGetResponse update(MemberUpdateNicknameRequest nicknameRequest) {
     Member member = getMember();
 
-    return member.getId();
+    member.updateNickname(nicknameRequest.nickname());
+
+    memberRepository.save(member);
+
+    return MemberGetResponse.builder()
+        .nickname(nicknameRequest.nickname())
+        .build();
   }
 
 }
