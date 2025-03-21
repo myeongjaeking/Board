@@ -8,11 +8,8 @@ import com.example.board.board.dto.response.BoardPageResponse;
 import com.example.board.board.entity.Board;
 import com.example.board.board.repository.BoardRepository;
 import com.example.board.comment.dto.response.CommentGetResponse;
-import com.example.board.comment.entity.Comment;
 import com.example.board.comment.service.CommentService;
-import com.example.board.global.config.jwt.SecurityUtil;
 import com.example.board.member.entity.Member;
-import com.example.board.member.repository.MemberRepository;
 import com.example.board.member.service.MemberService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -44,9 +41,26 @@ public class BoardService {
   }
 
   @Transactional
+  public void incrementLikeCount(Long boardId) {
+    Board board = boardRepository.findById(boardId);
+
+    board.incrementLikeCount();
+    boardRepository.save(board);
+  }
+
+  @Transactional
+  public void decrementLikeCount(Long boardId) {
+    Board board = boardRepository.findById(boardId);
+
+    board.decrementLikeCount();
+    boardRepository.save(board);
+  }
+
+  @Transactional
   public BoardAndCommentGetResponse read(Long id) {
     Member member = memberService.getMember();
     Board board = boardRepository.findBoardByMemberAndId(member, id);
+
     List<CommentGetResponse> commentList = commentService.getCommentList(id);
 
     board.incrementViewCount();

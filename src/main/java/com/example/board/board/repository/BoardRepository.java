@@ -38,4 +38,8 @@ public class BoardRepository {
     return boardJpaRepository.findAll(pageable);
   }
 
+  public Board findById(Long id){
+    return boardJpaRepository.findById(id).orElseThrow();
+  }
+
 }
