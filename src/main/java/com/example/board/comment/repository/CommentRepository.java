@@ -15,8 +15,12 @@ public class CommentRepository {
     commentJpaRepository.save(comment);
   }
 
-  public List<Comment> getList(Long boardId) {
+  public List<Comment> findCommentByBoardId(Long boardId) {
     return commentJpaRepository.findCommentByBoardId(boardId);
+  }
+
+  public Comment findCommentByBoardIdAndId(Long boardId, Long id){
+    return commentJpaRepository.findCommentByBoardIdAndId(boardId,id);
   }
 
 }

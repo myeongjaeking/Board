@@ -1,6 +1,7 @@
 package com.example.board.comment.service;
 
 import com.example.board.comment.dto.request.CommentCreateRequest;
+import com.example.board.comment.dto.request.CommentUpdateRequest;
 import com.example.board.comment.dto.response.CommentGetResponse;
 import com.example.board.comment.entity.Comment;
 import com.example.board.comment.repository.CommentRepository;
@@ -35,11 +36,22 @@ public class CommentService {
 
   @Transactional(readOnly = true)
   public List<CommentGetResponse> getCommentList(Long boardId) {
-    List<Comment> commentList = commentRepository.getList(boardId);
+    List<Comment> commentList = commentRepository.findCommentByBoardId(boardId);
 
     return commentList.stream()
         .map(CommentGetResponse::from)
         .toList();
+  }
+
+  @Transactional
+  public CommentGetResponse update(Long boardId, Long id,
+      CommentUpdateRequest commentUpdateRequest) {
+    Comment comment = commentRepository.findCommentByBoardIdAndId(boardId,id);
+
+    comment.updateContent(commentUpdateRequest.content());
+    commentRepository.save(comment);
+
+    return CommentGetResponse.from(comment);
   }
 
 }

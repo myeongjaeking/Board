@@ -42,4 +42,8 @@ public class Comment {
     this.boardId = boardId;
   }
 
+  public void updateContent(String content) {
+    this.content = content;
+  }
+
 }
