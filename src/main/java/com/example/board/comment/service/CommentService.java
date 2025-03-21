@@ -54,4 +54,11 @@ public class CommentService {
     return CommentGetResponse.from(comment);
   }
 
+  @Transactional
+  public Long delete(Long boardId, Long id) {
+    commentRepository.delete(boardId,id);
+
+    return id;
+  }
+
 }

@@ -19,8 +19,14 @@ public class CommentRepository {
     return commentJpaRepository.findCommentByBoardId(boardId);
   }
 
-  public Comment findCommentByBoardIdAndId(Long boardId, Long id){
-    return commentJpaRepository.findCommentByBoardIdAndId(boardId,id);
+  public Comment findCommentByBoardIdAndId(Long boardId, Long id) {
+    return commentJpaRepository.findCommentByBoardIdAndId(boardId, id);
+  }
+
+  public void delete(Long boardId, Long id) {
+    Comment comment = findCommentByBoardIdAndId(boardId,id);
+
+    commentJpaRepository.delete(comment);
   }
 
 }
