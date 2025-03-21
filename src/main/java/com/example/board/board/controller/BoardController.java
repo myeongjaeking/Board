@@ -60,4 +60,9 @@ public class BoardController {
     return ResponseEntity.status(HttpStatus.OK).body(list);
   }
 
+//  @PutMapping("/{id}/like")
+//  public ResponseEntity<BoardGetResponse> like(@PathVariable("id") Long id){
+//    BoardGetResponse boardGetResponse
+//  }
+
 }

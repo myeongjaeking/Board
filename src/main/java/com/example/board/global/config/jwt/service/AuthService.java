@@ -2,6 +2,7 @@ package com.example.board.global.config.jwt.service;
 
 import static com.example.board.global.exception.GlobalExceptionCode.NOT_MATCH_PASSWORD;
 
+import com.example.board.global.config.jwt.SecurityUtil;
 import com.example.board.global.exception.CustomException;
 import com.example.board.member.dto.request.MemberCreateRequest;
 import com.example.board.member.dto.request.MemberLoginRequest;
@@ -42,6 +43,15 @@ public class AuthService {
 
   private void saveRefreshToken(Long userId, String refreshToken) {
     memberService.saveRefreshToken(userId, refreshToken);
+  }
+
+  public Long logout() {
+    String email = SecurityUtil.getUserEmail();
+    Member member = memberService.findByEmail(email);
+
+    memberService.saveRefreshToken(member.getId(),null);
+
+    return member.getId();
   }
 
 }

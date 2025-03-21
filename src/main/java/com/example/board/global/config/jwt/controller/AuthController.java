@@ -10,6 +10,7 @@ import com.example.board.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,13 +40,19 @@ public class AuthController {
   }
 
   @PostMapping("/refresh")
-  public ResponseEntity<CreateAccessTokenResponse> createNewAccessToken(
+  public ResponseEntity<String > createNewAccessToken(
       @RequestBody CreateAccessTokenRequest request) {
     String newAccessToken = tokenService.createNewAccessToken(request.getRefreshToken());
 
     return ResponseEntity.status(HttpStatus.CREATED)
-        .body(new CreateAccessTokenResponse(newAccessToken));
+        .body(newAccessToken);
   }
 
+  @DeleteMapping("/logout")
+  public ResponseEntity<Long> logout(){
+    Long memberId = authService.logout();
+
+    return ResponseEntity.status(HttpStatus.OK).body(memberId);
+  }
 
 }
