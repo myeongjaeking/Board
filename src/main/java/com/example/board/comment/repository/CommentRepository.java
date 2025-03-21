@@ -1,6 +1,7 @@
 package com.example.board.comment.repository;
 
 import com.example.board.comment.entity.Comment;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -12,6 +13,10 @@ public class CommentRepository {
 
   public void save(Comment comment) {
     commentJpaRepository.save(comment);
+  }
+
+  public List<Comment> getList(Long boardId) {
+    return commentJpaRepository.findCommentByBoardId(boardId);
   }
 
 }
