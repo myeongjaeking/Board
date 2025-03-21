@@ -6,6 +6,10 @@ import com.example.board.board.dto.response.BoardGetResponse;
 import com.example.board.board.dto.response.BoardPageResponse;
 import com.example.board.board.entity.Board;
 import com.example.board.board.repository.BoardRepository;
+import com.example.board.global.config.jwt.SecurityUtil;
+import com.example.board.member.entity.Member;
+import com.example.board.member.repository.MemberRepository;
+import com.example.board.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,12 +21,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class BoardService {
 
   private final BoardRepository boardRepository;
+  private final MemberService memberService;
 
   @Transactional
   public BoardGetResponse create(BoardCreateRequest boardCreateRequest) {
+    Member member = memberService.getMember();
+
     Board board = Board.create()
         .title(boardCreateRequest.title())
         .content(boardCreateRequest.content())
+        .member(member)
         .build();
     boardRepository.save(board);
 
@@ -31,7 +39,8 @@ public class BoardService {
 
   @Transactional
   public BoardGetResponse read(Long id) {
-    Board board = boardRepository.findById(id);
+    Member member = memberService.getMember();
+    Board board = boardRepository.findBoardByMemberAndId(member,id);
 
     board.incrementViewCount();
 
@@ -40,7 +49,9 @@ public class BoardService {
 
   @Transactional
   public BoardGetResponse update(Long id, BoardUpdateRequest boardUpdateRequest) {
-    Board board = boardRepository.findById(id);
+    Member member = memberService.getMember();
+    Board board = boardRepository.findBoardByMemberAndId(member,id);
+
     board.update(boardUpdateRequest.title(), boardUpdateRequest.content());
 
     return BoardGetResponse.from(board);
@@ -48,7 +59,8 @@ public class BoardService {
 
   @Transactional
   public Long delete(Long id) {
-    boardRepository.delete(id);
+    Member member = memberService.getMember();
+    boardRepository.delete(member,id);
 
     return id;
   }

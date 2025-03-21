@@ -7,6 +7,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -39,7 +40,7 @@ public class Member {
   @Column(name = "role",nullable = false)
   private Role role;
 
-  
+
 
   @Builder(builderMethodName = "create")
   public Member(String email, String password, String nickname){

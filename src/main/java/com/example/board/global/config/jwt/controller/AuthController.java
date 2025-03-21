@@ -40,7 +40,7 @@ public class AuthController {
   }
 
   @PostMapping("/refresh")
-  public ResponseEntity<String > createNewAccessToken(
+  public ResponseEntity<String> createNewAccessToken(
       @RequestBody CreateAccessTokenRequest request) {
     String newAccessToken = tokenService.createNewAccessToken(request.getRefreshToken());
 
@@ -49,7 +49,7 @@ public class AuthController {
   }
 
   @DeleteMapping("/logout")
-  public ResponseEntity<Long> logout(){
+  public ResponseEntity<Long> logout() {
     Long memberId = authService.logout();
 
     return ResponseEntity.status(HttpStatus.OK).body(memberId);

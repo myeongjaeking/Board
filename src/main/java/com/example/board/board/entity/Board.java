@@ -1,5 +1,6 @@
 package com.example.board.board.entity;
 
+import com.example.board.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -33,11 +34,16 @@ public class Board {
   @Column(name = "create_time", nullable = false)
   private LocalDateTime createTime;
 
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "member_id")
+  private Member member;
+
   @Builder(builderMethodName = "create")
-  public Board(String title, String content) {
+  public Board(String title, String content, Member member) {
     this.title = title;
     this.content = content;
     this.createTime = LocalDateTime.now();
+    this.member = member;
     this.viewCount = 0;
     this.likeCount = 0;
   }

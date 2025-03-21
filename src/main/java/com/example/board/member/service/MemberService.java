@@ -1,5 +1,6 @@
 package com.example.board.member.service;
 
+import com.example.board.global.config.jwt.SecurityUtil;
 import com.example.board.member.dto.request.MemberCreateRequest;
 import com.example.board.member.entity.Member;
 import com.example.board.member.repository.MemberRepository;
@@ -18,6 +19,7 @@ public class MemberService {
         .nickname(memberCreateRequest.nickname())
         .password(memberCreateRequest.password())
         .build();
+
     memberRepository.save(member);
 
     return member;
@@ -40,6 +42,18 @@ public class MemberService {
 
   public Member findById(Long memberId) {
     return memberRepository.findById(memberId);
+  }
+
+  public Member getMember() {
+    String email = SecurityUtil.getUserEmail();
+
+    return memberRepository.findByEmail(email);
+  }
+
+  public Long getMemberId() {
+    Member member = getMember();
+
+    return member.getId();
   }
 
 }

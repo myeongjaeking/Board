@@ -10,6 +10,7 @@ public record BoardGetResponse(
     String title,
     String content,
     LocalDateTime createTime,
+    String nickname,
     int viewCount,
     int likeCount
 ) {
@@ -19,6 +20,7 @@ public record BoardGetResponse(
         .title(board.getTitle())
         .content(board.getContent())
         .createTime(board.getCreateTime())
+        .nickname(board.getMember().getNickname())
         .viewCount(board.getViewCount())
         .likeCount(board.getLikeCount())
         .build();

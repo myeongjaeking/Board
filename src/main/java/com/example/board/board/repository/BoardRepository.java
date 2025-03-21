@@ -2,6 +2,7 @@ package com.example.board.board.repository;
 
 import com.example.board.board.entity.Board;
 import com.example.board.global.exception.CustomException;
+import com.example.board.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,12 +22,14 @@ public class BoardRepository {
     boardJpaRepository.save(board);
   }
 
-  public Board findById(Long id) {
-    return boardJpaRepository.findById(id).orElseThrow(() -> new CustomException(NOT_FOUND_BOARD));
+  public Board findBoardByMemberAndId(Member member, Long id) {
+
+    return boardJpaRepository.findBoardByMemberAndId(member, id)
+        .orElseThrow(() -> new CustomException(NOT_FOUND_BOARD));
   }
 
-  public void delete(Long id) {
-    boardJpaRepository.findById(id).orElseThrow(() -> new CustomException(NOT_FOUND_BOARD));
+  public void delete(Member member,Long id) {
+    boardJpaRepository.findBoardByMemberAndId(member,id).orElseThrow(() -> new CustomException(NOT_FOUND_BOARD));
 
     boardJpaRepository.deleteById(id);
   }
