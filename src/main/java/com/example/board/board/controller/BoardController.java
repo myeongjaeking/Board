@@ -2,6 +2,7 @@ package com.example.board.board.controller;
 
 import com.example.board.board.dto.request.BoardCreateRequest;
 import com.example.board.board.dto.request.BoardUpdateRequest;
+import com.example.board.board.dto.response.BoardAndCommentGetResponse;
 import com.example.board.board.dto.response.BoardGetResponse;
 import com.example.board.board.dto.response.BoardPageResponse;
 import com.example.board.board.service.BoardService;
@@ -31,10 +32,10 @@ public class BoardController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<BoardGetResponse> read(@PathVariable("id") Long id) {
-    BoardGetResponse boardGetResponse = boardService.read(id);
+  public ResponseEntity<BoardAndCommentGetResponse> read(@PathVariable("id") Long id) {
+    BoardAndCommentGetResponse boardAndCommentGetResponse = boardService.read(id);
 
-    return ResponseEntity.status(HttpStatus.FOUND).body(boardGetResponse);
+    return ResponseEntity.status(HttpStatus.FOUND).body(boardAndCommentGetResponse);
   }
 
   @PatchMapping("/{id}")

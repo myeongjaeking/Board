@@ -32,7 +32,7 @@ public class CommentController {
     return ResponseEntity.status(HttpStatus.CREATED).body(commentGetResponse);
   }
 
-  @GetMapping("/list")
+  @GetMapping
   public ResponseEntity<List<CommentGetResponse>> read(@PathVariable("boardId") Long boardId) {
     List<CommentGetResponse> commentGetResponses = commentService.getCommentList(boardId);
 

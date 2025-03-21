@@ -2,14 +2,19 @@ package com.example.board.board.service;
 
 import com.example.board.board.dto.request.BoardCreateRequest;
 import com.example.board.board.dto.request.BoardUpdateRequest;
+import com.example.board.board.dto.response.BoardAndCommentGetResponse;
 import com.example.board.board.dto.response.BoardGetResponse;
 import com.example.board.board.dto.response.BoardPageResponse;
 import com.example.board.board.entity.Board;
 import com.example.board.board.repository.BoardRepository;
+import com.example.board.comment.dto.response.CommentGetResponse;
+import com.example.board.comment.entity.Comment;
+import com.example.board.comment.service.CommentService;
 import com.example.board.global.config.jwt.SecurityUtil;
 import com.example.board.member.entity.Member;
 import com.example.board.member.repository.MemberRepository;
 import com.example.board.member.service.MemberService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class BoardService {
 
   private final BoardRepository boardRepository;
+  private final CommentService commentService;
   private final MemberService memberService;
 
   @Transactional
@@ -38,19 +44,20 @@ public class BoardService {
   }
 
   @Transactional
-  public BoardGetResponse read(Long id) {
+  public BoardAndCommentGetResponse read(Long id) {
     Member member = memberService.getMember();
-    Board board = boardRepository.findBoardByMemberAndId(member,id);
+    Board board = boardRepository.findBoardByMemberAndId(member, id);
+    List<CommentGetResponse> commentList = commentService.getCommentList(id);
 
     board.incrementViewCount();
 
-    return BoardGetResponse.from(board);
+    return BoardAndCommentGetResponse.from(board,commentList);
   }
 
   @Transactional
   public BoardGetResponse update(Long id, BoardUpdateRequest boardUpdateRequest) {
     Member member = memberService.getMember();
-    Board board = boardRepository.findBoardByMemberAndId(member,id);
+    Board board = boardRepository.findBoardByMemberAndId(member, id);
 
     board.update(boardUpdateRequest.title(), boardUpdateRequest.content());
 
@@ -60,7 +67,7 @@ public class BoardService {
   @Transactional
   public Long delete(Long id) {
     Member member = memberService.getMember();
-    boardRepository.delete(member,id);
+    boardRepository.delete(member, id);
 
     return id;
   }
