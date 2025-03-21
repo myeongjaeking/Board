@@ -29,7 +29,8 @@ public class MemberController {
   }
 
   @PatchMapping("/update")
-  ResponseEntity<MemberGetResponse> update(@RequestBody MemberUpdateNicknameRequest nicknameRequest) {
+  ResponseEntity<MemberGetResponse> update(
+      @RequestBody MemberUpdateNicknameRequest nicknameRequest) {
     MemberGetResponse memberGetResponse = memberService.update(nicknameRequest);
 
     return ResponseEntity.status(HttpStatus.OK).body(memberGetResponse);
