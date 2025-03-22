@@ -1,4 +1,4 @@
-package com.example.board.like.entity;
+package com.example.board.bookmark.entity;
 
 import com.example.board.member.entity.Member;
 import jakarta.persistence.Column;
@@ -16,10 +16,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "loves")
+@Table(name = "bookmarks")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Love {
+public class Bookmark {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,11 +29,11 @@ public class Love {
   @JoinColumn(name = "member_id")
   private Member member;
 
-  @Column(name = "board_id",nullable = false)
+  @Column(name = "board_id", nullable = false)
   private Long boardId;
 
   @Builder(builderMethodName = "create")
-  public Love(Member member, Long boardId){
+  public Bookmark(Member member, Long boardId) {
     this.boardId = boardId;
     this.member = member;
   }

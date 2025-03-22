@@ -99,4 +99,11 @@ public class BoardService {
         ));
   }
 
+  @Transactional(readOnly = true)
+  public BoardGetResponse getBoardResponseById(Long boardId) {
+    Board board = boardRepository.findById(boardId);
+
+    return BoardGetResponse.from(board);
+  }
+
 }

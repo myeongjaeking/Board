@@ -25,14 +25,13 @@ public class LoveService {
       create(boardId);
     }
   }
+
   @Transactional(readOnly = true)
   public boolean isLike(Long boardId) {
     Member member = memberService.getMember();
 
     return loveRepository.findLikeByBoardIdAndMember(boardId, member) != null;
   }
-
-
 
   @Transactional
   protected void create(Long boardId) {
