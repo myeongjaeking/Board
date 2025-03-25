@@ -48,7 +48,6 @@ public class CommentService {
     Comment comment = commentRepository.findByBoardIdAndId(boardId,id);
 
     comment.updateContent(commentUpdateRequest.content());
-    commentRepository.save(comment);
 
     return CommentGetResponse.from(comment);
   }

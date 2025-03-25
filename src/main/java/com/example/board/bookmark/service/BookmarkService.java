@@ -48,7 +48,6 @@ public class BookmarkService {
     bookmarkRepository.save(bookmark);
   }
 
-
   private void delete(Long boardId) {
     Member member = SecurityUtil.getMember();
 
