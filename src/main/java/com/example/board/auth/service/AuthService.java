@@ -22,8 +22,8 @@ public class AuthService {
   private final TokenProvider tokenProvider;
 
   public String login(MemberLoginRequest memberLoginRequest) {
-    Member member = memberRepository.findByEmail(memberLoginRequest.getEmail());
-    validatePassword(member, memberLoginRequest.getPassword());
+    Member member = memberRepository.findByEmail(memberLoginRequest.email());
+    validatePassword(member, memberLoginRequest.password());
 
     String accessToken = tokenProvider.generateToken(member, Duration.ofHours(2));
     String refreshToken = tokenProvider.generateToken(member, Duration.ofDays(14));

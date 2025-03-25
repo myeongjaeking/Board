@@ -1,6 +1,8 @@
 package com.example.board.bookmark.service;
 
 import com.example.board.board.dto.response.BoardGetResponse;
+import com.example.board.board.entity.Board;
+import com.example.board.board.repository.BoardRepository;
 import com.example.board.board.service.BoardService;
 import com.example.board.bookmark.entity.Bookmark;
 import com.example.board.bookmark.repository.BookmarkRepository;
@@ -17,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class BookmarkService {
 
   private final BookmarkRepository bookmarkRepository;
-  private final BoardService boardService;
+  private final BoardRepository boardRepository;
 
   @Transactional
   public void doRegister(Long boardId) {
@@ -59,8 +61,10 @@ public class BookmarkService {
 
     List<Long> boardIds = bookmarkRepository.findBoardIdByMember(member);
 
-    return boardIds.stream()
-        .map(boardService::getBoardResponseById)
+    List<Board> boards = boardRepository.findAllById(boardIds);
+
+    return boards.stream()
+        .map(BoardGetResponse::from)
         .collect(Collectors.toList());
   }
 

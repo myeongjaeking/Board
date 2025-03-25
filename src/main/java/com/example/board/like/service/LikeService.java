@@ -1,5 +1,7 @@
 package com.example.board.like.service;
 
+import com.example.board.board.entity.Board;
+import com.example.board.board.repository.BoardRepository;
 import com.example.board.board.service.BoardService;
 import com.example.board.global.common.SecurityUtil;
 import com.example.board.like.entity.Likes;
@@ -14,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class LikeService {
 
   private final LikeRepository likeRepository;
-  private final BoardService boardService;
+  private final BoardRepository boardRepository;
 
   @Transactional
   public void doLike(Long boardId) {
@@ -42,7 +44,9 @@ public class LikeService {
         .build();
 
     likeRepository.save(likes);
-    boardService.incrementLikeCount(boardId);
+
+    Board board = boardRepository.findById(boardId);
+    board.incrementLikeCount();
   }
 
   @Transactional
@@ -50,7 +54,9 @@ public class LikeService {
     Member member = SecurityUtil.getMember();
 
     likeRepository.delete(boardId, member);
-    boardService.decrementLikeCount(boardId);
+
+    Board board = boardRepository.findById(boardId);
+    board.decrementLikeCount();
   }
 
 }

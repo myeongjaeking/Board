@@ -8,10 +8,13 @@ import com.example.board.board.dto.response.BoardPageResponse;
 import com.example.board.board.entity.Board;
 import com.example.board.board.repository.BoardRepository;
 import com.example.board.comment.dto.response.CommentGetResponse;
+import com.example.board.comment.entity.Comment;
+import com.example.board.comment.repository.CommentRepository;
 import com.example.board.comment.service.CommentService;
 import com.example.board.global.common.SecurityUtil;
 import com.example.board.member.entity.Member;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class BoardService {
 
   private final BoardRepository boardRepository;
-  private final CommentService commentService;
+  private final CommentRepository commentRepository;
 
   @Transactional
   public BoardGetResponse create(BoardCreateRequest boardCreateRequest) {
@@ -40,31 +43,18 @@ public class BoardService {
   }
 
   @Transactional
-  public void incrementLikeCount(Long boardId) {
-    Board board = boardRepository.findById(boardId);
-
-    board.incrementLikeCount();
-    boardRepository.save(board);
-  }
-
-  @Transactional
-  public void decrementLikeCount(Long boardId) {
-    Board board = boardRepository.findById(boardId);
-
-    board.decrementLikeCount();
-    boardRepository.save(board);
-  }
-
-  @Transactional
   public BoardAndCommentGetResponse read(Long id) {
     Member member = SecurityUtil.getMember();
     Board board = boardRepository.findByMemberAndId(member, id);
 
-    List<CommentGetResponse> commentList = commentService.getCommentList(id);
+    List<Comment> comments = commentRepository.findByBoardId(id);
+    List<CommentGetResponse> commentResponses = comments.stream()
+        .map(CommentGetResponse::from)
+        .collect(Collectors.toList());
 
     board.incrementViewCount();
 
-    return BoardAndCommentGetResponse.from(board,commentList);
+    return BoardAndCommentGetResponse.from(board,commentResponses);
   }
 
   @Transactional
@@ -96,13 +86,6 @@ public class BoardService {
             board.getCreateTime(),
             board.getViewCount()
         ));
-  }
-
-  @Transactional(readOnly = true)
-  public BoardGetResponse getBoardResponseById(Long boardId) {
-    Board board = boardRepository.findById(boardId);
-
-    return BoardGetResponse.from(board);
   }
 
 }
