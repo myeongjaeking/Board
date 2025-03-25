@@ -2,6 +2,7 @@ package com.example.board.auth.service;
 
 import static com.example.board.global.exception.GlobalExceptionCode.NOT_VALID_REFRESH_TOKEN;
 
+import com.example.board.global.common.SecurityUtil;
 import com.example.board.global.security.jwt.TokenProvider;
 import com.example.board.global.exception.CustomException;
 import com.example.board.member.entity.Member;
@@ -15,7 +16,6 @@ import org.springframework.stereotype.Service;
 public class TokenService {
 
   private final TokenProvider tokenProvider;
-  private final MemberService memberService;
 
   //CutomException
   public String createNewAccessToken(String refreshToken) {
@@ -23,8 +23,8 @@ public class TokenService {
       throw new CustomException(NOT_VALID_REFRESH_TOKEN);
     }
 
-    Long memberId = memberService.findByRefreshToken(refreshToken).getId();
-    Member member = memberService.findById(memberId);
+    Member member = SecurityUtil.getMember();
+
     return tokenProvider.generateToken(member, Duration.ofHours(2));
   }
 

@@ -1,11 +1,8 @@
 package com.example.board.member.dto.request;
 
-import lombok.Getter;
-
-@Getter
-public class MemberLoginRequest {
-
-  private String email;
-  private String password;
+public record MemberLoginRequest(
+    String email,
+    String password
+) {
 
 }

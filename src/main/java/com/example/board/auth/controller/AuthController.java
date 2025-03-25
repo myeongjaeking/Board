@@ -32,10 +32,10 @@ public class AuthController {
   }
 
   @PostMapping("/signup")
-  ResponseEntity<Member> signup(@RequestBody MemberCreateRequest memberCreateRequest) {
-    Member member = authService.signup(memberCreateRequest);
+  ResponseEntity<Long> signup(@RequestBody MemberCreateRequest memberCreateRequest) {
+    Long memberId = authService.signup(memberCreateRequest);
 
-    return ResponseEntity.status(HttpStatus.CREATED).body(member);
+    return ResponseEntity.status(HttpStatus.CREATED).body(memberId);
   }
 
   @PostMapping("/refresh")

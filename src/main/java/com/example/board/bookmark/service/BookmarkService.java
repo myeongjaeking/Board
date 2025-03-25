@@ -35,7 +35,6 @@ public class BookmarkService {
     return bookmarkRepository.findByBoardIdAndMember(boardId, member) != null;
   }
 
-
   private void register(Long boardId) {
     Member member = SecurityUtil.getMember();
 

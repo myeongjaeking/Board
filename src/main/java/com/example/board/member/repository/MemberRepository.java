@@ -1,5 +1,6 @@
 package com.example.board.member.repository;
 
+import com.example.board.member.dto.request.MemberCreateRequest;
 import com.example.board.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -9,10 +10,6 @@ import org.springframework.stereotype.Repository;
 public class MemberRepository {
 
   private final MemberJpaRepository memberJpaRepository;
-
-  public Member findByRefreshToken(String token) {
-    return memberJpaRepository.findByRefreshToken(token);
-  }
 
   public Member findByEmail(String email) {
     return memberJpaRepository.findByEmail(email);
