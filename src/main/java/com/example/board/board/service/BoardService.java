@@ -9,8 +9,8 @@ import com.example.board.board.entity.Board;
 import com.example.board.board.repository.BoardRepository;
 import com.example.board.comment.dto.response.CommentGetResponse;
 import com.example.board.comment.service.CommentService;
+import com.example.board.global.common.SecurityUtil;
 import com.example.board.member.entity.Member;
-import com.example.board.member.service.MemberService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,11 +24,10 @@ public class BoardService {
 
   private final BoardRepository boardRepository;
   private final CommentService commentService;
-  private final MemberService memberService;
 
   @Transactional
   public BoardGetResponse create(BoardCreateRequest boardCreateRequest) {
-    Member member = memberService.getMember();
+    Member member = SecurityUtil.getMember();
 
     Board board = Board.create()
         .title(boardCreateRequest.title())
@@ -58,8 +57,8 @@ public class BoardService {
 
   @Transactional
   public BoardAndCommentGetResponse read(Long id) {
-    Member member = memberService.getMember();
-    Board board = boardRepository.findBoardByMemberAndId(member, id);
+    Member member = SecurityUtil.getMember();
+    Board board = boardRepository.findByMemberAndId(member, id);
 
     List<CommentGetResponse> commentList = commentService.getCommentList(id);
 
@@ -70,8 +69,8 @@ public class BoardService {
 
   @Transactional
   public BoardGetResponse update(Long id, BoardUpdateRequest boardUpdateRequest) {
-    Member member = memberService.getMember();
-    Board board = boardRepository.findBoardByMemberAndId(member, id);
+    Member member = SecurityUtil.getMember();
+    Board board = boardRepository.findByMemberAndId(member, id);
 
     board.update(boardUpdateRequest.title(), boardUpdateRequest.content());
 
@@ -80,7 +79,7 @@ public class BoardService {
 
   @Transactional
   public Long delete(Long id) {
-    Member member = memberService.getMember();
+    Member member = SecurityUtil.getMember();
     boardRepository.delete(member, id);
 
     return id;

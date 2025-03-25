@@ -8,8 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 import static com.example.board.global.exception.GlobalExceptionCode.NOT_FOUND_BOARD;
 
 @Repository
@@ -22,14 +20,14 @@ public class BoardRepository {
     boardJpaRepository.save(board);
   }
 
-  public Board findBoardByMemberAndId(Member member, Long id) {
+  public Board findByMemberAndId(Member member, Long id) {
 
-    return boardJpaRepository.findBoardByMemberAndId(member, id)
+    return boardJpaRepository.findByMemberAndId(member, id)
         .orElseThrow(() -> new CustomException(NOT_FOUND_BOARD));
   }
 
   public void delete(Member member,Long id) {
-    boardJpaRepository.findBoardByMemberAndId(member,id).orElseThrow(() -> new CustomException(NOT_FOUND_BOARD));
+    boardJpaRepository.findByMemberAndId(member,id).orElseThrow(() -> new CustomException(NOT_FOUND_BOARD));
 
     boardJpaRepository.deleteById(id);
   }

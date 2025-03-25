@@ -15,16 +15,16 @@ public class CommentRepository {
     commentJpaRepository.save(comment);
   }
 
-  public List<Comment> findCommentByBoardId(Long boardId) {
-    return commentJpaRepository.findCommentByBoardId(boardId);
+  public List<Comment> findByBoardId(Long boardId) {
+    return commentJpaRepository.findByBoardId(boardId);
   }
 
-  public Comment findCommentByBoardIdAndId(Long boardId, Long id) {
-    return commentJpaRepository.findCommentByBoardIdAndId(boardId, id);
+  public Comment findByBoardIdAndId(Long boardId, Long id) {
+    return commentJpaRepository.findByBoardIdAndId(boardId, id);
   }
 
   public void delete(Long boardId, Long id) {
-    Comment comment = findCommentByBoardIdAndId(boardId,id);
+    Comment comment = findByBoardIdAndId(boardId,id);
 
     commentJpaRepository.delete(comment);
   }

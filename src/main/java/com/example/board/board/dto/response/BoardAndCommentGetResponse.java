@@ -17,6 +17,7 @@ public record BoardAndCommentGetResponse(
     List<CommentGetResponse> commentList
 ) {
 
+  //Response 에 굳이 엔티티 안 넣을 듯
   public static BoardAndCommentGetResponse from(Board board,
       List<CommentGetResponse> commentList) {
     return BoardAndCommentGetResponse.builder()

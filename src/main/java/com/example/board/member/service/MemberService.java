@@ -1,6 +1,6 @@
 package com.example.board.member.service;
 
-import com.example.board.global.config.jwt.SecurityUtil;
+import com.example.board.global.common.SecurityUtil;
 import com.example.board.member.dto.request.MemberCreateRequest;
 import com.example.board.member.dto.request.MemberUpdateNicknameRequest;
 import com.example.board.member.dto.response.MemberGetResponse;
@@ -46,14 +46,8 @@ public class MemberService {
     return memberRepository.findById(memberId);
   }
 
-  public Member getMember() {
-    String email = SecurityUtil.getUserEmail();
-
-    return memberRepository.findByEmail(email);
-  }
-
   public MemberGetResponse update(MemberUpdateNicknameRequest nicknameRequest) {
-    Member member = getMember();
+    Member member = SecurityUtil.getMember();
 
     member.updateNickname(nicknameRequest.nickname());
 

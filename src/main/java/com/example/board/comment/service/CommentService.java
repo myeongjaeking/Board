@@ -5,8 +5,8 @@ import com.example.board.comment.dto.request.CommentUpdateRequest;
 import com.example.board.comment.dto.response.CommentGetResponse;
 import com.example.board.comment.entity.Comment;
 import com.example.board.comment.repository.CommentRepository;
+import com.example.board.global.common.SecurityUtil;
 import com.example.board.member.entity.Member;
-import com.example.board.member.service.MemberService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,11 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class CommentService {
 
   private final CommentRepository commentRepository;
-  private final MemberService memberService;
 
   @Transactional
   public CommentGetResponse create(Long boardId, CommentCreateRequest commentCreateRequest) {
-    Member member = memberService.getMember();
+    Member member = SecurityUtil.getMember();
 
     Comment comment = Comment.create()
         .boardId(boardId)
@@ -36,7 +35,7 @@ public class CommentService {
 
   @Transactional(readOnly = true)
   public List<CommentGetResponse> getCommentList(Long boardId) {
-    List<Comment> commentList = commentRepository.findCommentByBoardId(boardId);
+    List<Comment> commentList = commentRepository.findByBoardId(boardId);
 
     return commentList.stream()
         .map(CommentGetResponse::from)
@@ -46,7 +45,7 @@ public class CommentService {
   @Transactional
   public CommentGetResponse update(Long boardId, Long id,
       CommentUpdateRequest commentUpdateRequest) {
-    Comment comment = commentRepository.findCommentByBoardIdAndId(boardId,id);
+    Comment comment = commentRepository.findByBoardIdAndId(boardId,id);
 
     comment.updateContent(commentUpdateRequest.content());
     commentRepository.save(comment);

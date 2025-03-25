@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BoardJpaRepository extends JpaRepository<Board, Long> {
 
-  Optional<Board> findBoardByMemberAndId(Member member, Long id);
+  Optional<Board> findByMemberAndId(Member member, Long id);
 
   Page<Board> findAll(Pageable pageable);
 

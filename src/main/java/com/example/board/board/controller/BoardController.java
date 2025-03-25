@@ -53,6 +53,7 @@ public class BoardController {
     return ResponseEntity.status(HttpStatus.OK).body(boardId);
   }
 
+  //오름차순으로 -> pageable 순재는 안 씀 명재도 안 쓸 예정
   @GetMapping("/list")
   public ResponseEntity<Page<BoardPageResponse>> page(
       @PageableDefault(page = 0, size = 3, sort = "id", direction = Sort.Direction.DESC) Pageable page) {

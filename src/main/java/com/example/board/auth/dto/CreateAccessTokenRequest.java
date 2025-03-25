@@ -1,4 +1,4 @@
-package com.example.board.global.config.jwt.dto;
+package com.example.board.auth.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

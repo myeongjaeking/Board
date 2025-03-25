@@ -1,4 +1,4 @@
-package com.example.board.global.config.jwt.service;
+package com.example.board.global.security.jwt;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

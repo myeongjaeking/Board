@@ -1,8 +1,9 @@
-package com.example.board.global.config.jwt.service;
+package com.example.board.auth.service;
 
 import static com.example.board.global.exception.GlobalExceptionCode.NOT_MATCH_PASSWORD;
 
-import com.example.board.global.config.jwt.SecurityUtil;
+import com.example.board.global.common.SecurityUtil;
+import com.example.board.global.security.jwt.TokenProvider;
 import com.example.board.global.exception.CustomException;
 import com.example.board.member.dto.request.MemberCreateRequest;
 import com.example.board.member.dto.request.MemberLoginRequest;
@@ -46,8 +47,7 @@ public class AuthService {
   }
 
   public Long logout() {
-    String email = SecurityUtil.getUserEmail();
-    Member member = memberService.findByEmail(email);
+    Member member = SecurityUtil.getMember();
 
     memberService.saveRefreshToken(member.getId(),null);
 

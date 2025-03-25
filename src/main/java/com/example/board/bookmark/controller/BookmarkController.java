@@ -23,14 +23,14 @@ public class BookmarkController {
   public ResponseEntity<?> register(@PathVariable("id") Long id) {
     bookmarkService.doRegister(id);
 
-    ResponseEntity.status(HttpStatus.CREATED).body(1);
+    return ResponseEntity.status(HttpStatus.CREATED).body(1);
   }
 
   @GetMapping("/{id}/bookmark")
-  public ResponseEntity<?> getRegister(@PathVariable("id") Long id) {
+  public ResponseEntity<Boolean> getRegister(@PathVariable("id") Long id) {
     boolean isRegister = bookmarkService.isRegister(id);
 
-    return ResponseEntity.status(HttpStatus.CREATED).body(isRegister);
+    return ResponseEntity.status(HttpStatus.OK).body(isRegister);
   }
 
   @GetMapping("/bookmark")

@@ -16,12 +16,12 @@ public class BookmarkRepository {
     bookmarkJpaRepository.save(bookmark);
   }
 
-  public Bookmark findBookmarkByBoardIdAndMember(Long boardId, Member member) {
-    return bookmarkJpaRepository.findBookmarkByBoardIdAndMember(boardId, member);
+  public Bookmark findByBoardIdAndMember(Long boardId, Member member) {
+    return bookmarkJpaRepository.findByBoardIdAndMember(boardId, member);
   }
 
   public void delete(Long boardId, Member member) {
-    Bookmark bookmark = findBookmarkByBoardIdAndMember(boardId,member);
+    Bookmark bookmark = findByBoardIdAndMember(boardId,member);
 
     bookmarkJpaRepository.delete(bookmark);
   }

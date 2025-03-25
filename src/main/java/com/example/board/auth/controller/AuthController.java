@@ -1,9 +1,8 @@
-package com.example.board.global.config.jwt.controller;
+package com.example.board.auth.controller;
 
-import com.example.board.global.config.jwt.dto.CreateAccessTokenRequest;
-import com.example.board.global.config.jwt.dto.CreateAccessTokenResponse;
-import com.example.board.global.config.jwt.service.AuthService;
-import com.example.board.global.config.jwt.service.TokenService;
+import com.example.board.auth.dto.CreateAccessTokenRequest;
+import com.example.board.auth.service.AuthService;
+import com.example.board.auth.service.TokenService;
 import com.example.board.member.dto.request.MemberCreateRequest;
 import com.example.board.member.dto.request.MemberLoginRequest;
 import com.example.board.member.entity.Member;

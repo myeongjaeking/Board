@@ -16,10 +16,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "loves")
+@Table(name = "likes")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Love {
+public class Likes {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +33,7 @@ public class Love {
   private Long boardId;
 
   @Builder(builderMethodName = "create")
-  public Love(Member member, Long boardId){
+  public Likes(Member member, Long boardId){
     this.boardId = boardId;
     this.member = member;
   }

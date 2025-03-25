@@ -40,8 +40,6 @@ public class Member {
   @Column(name = "role",nullable = false)
   private Role role;
 
-
-
   @Builder(builderMethodName = "create")
   public Member(String email, String password, String nickname){
     this.email = email;

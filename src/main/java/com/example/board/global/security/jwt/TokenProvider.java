@@ -1,5 +1,6 @@
-package com.example.board.global.config.jwt.service;
+package com.example.board.global.security.jwt;
 
+import com.example.board.global.security.jwt.JwtProperties;
 import com.example.board.member.entity.Member;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
