@@ -32,9 +32,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<ExceptionResponse> handleException() {
-        return ResponseEntity.internalServerError().body(ExceptionResponse.from(SERVER_ERROR));
+        return ResponseEntity.internalServerError()
+            .body(ExceptionResponse.from(SERVER_ERROR.newException()));
     }
-
     @ExceptionHandler(ConstraintViolationException.class)
     protected ResponseEntity<ExceptionResponse> handleConstraintViolationException(ConstraintViolationException exception) {
         String message = exception.getConstraintViolations().stream()

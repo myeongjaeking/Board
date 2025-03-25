@@ -24,7 +24,7 @@ public class BoardRepository {
   public Board findByMemberAndId(Member member, Long id) {
 
     return boardJpaRepository.findByMemberAndId(member, id)
-        .orElseThrow(() -> new CustomException(NOT_FOUND_BOARD));
+        .orElseThrow(NOT_FOUND_BOARD::newException);
   }
 
   public List<Board> findAllById(List<Long> id) {
@@ -32,7 +32,8 @@ public class BoardRepository {
   }
 
   public void delete(Member member,Long id) {
-    boardJpaRepository.findByMemberAndId(member,id).orElseThrow(() -> new CustomException(NOT_FOUND_BOARD));
+    boardJpaRepository.findByMemberAndId(member,id)
+        .orElseThrow(NOT_FOUND_BOARD::newException);
 
     boardJpaRepository.deleteById(id);
   }

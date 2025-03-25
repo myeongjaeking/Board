@@ -9,11 +9,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
-@RequiredArgsConstructor
+@Component
 public class SecurityUtil {
 
   private static MemberRepository memberRepository;
+
+  public SecurityUtil(MemberRepository memberRepository) {
+    SecurityUtil.memberRepository = memberRepository;
+  }
 
   public static Member getMember() {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

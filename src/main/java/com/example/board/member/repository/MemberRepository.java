@@ -1,6 +1,7 @@
 package com.example.board.member.repository;
 
-import com.example.board.member.dto.request.MemberCreateRequest;
+import static com.example.board.global.exception.GlobalExceptionCode.NO_AUTHENTICATED;
+
 import com.example.board.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -20,7 +21,7 @@ public class MemberRepository {
   }
 
   public Member findById(Long memberId) {
-    return memberJpaRepository.findById(memberId).orElseThrow();
+    return memberJpaRepository.findById(memberId).orElseThrow(NO_AUTHENTICATED::newException);
   }
 
 }
