@@ -21,7 +21,11 @@ public class LikeRepository {
   }
 
   public Likes findByBoardIdAndMember(Long boardId, Member member) {
-    return likeJpaRepository.findByBoardIdAndMember(boardId, member);
+    return likeJpaRepository.findByBoardIdAndMember(boardId, member).orElseThrow();
+  }
+
+  public boolean existsByBoardIdAndMember(Long boardId, Member member) {
+    return likeJpaRepository.existsByBoardIdAndMember(boardId, member);
   }
 
 }

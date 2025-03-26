@@ -35,13 +35,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.internalServerError()
             .body(ExceptionResponse.from(SERVER_ERROR.newException()));
     }
+
     @ExceptionHandler(ConstraintViolationException.class)
     protected ResponseEntity<ExceptionResponse> handleConstraintViolationException(ConstraintViolationException exception) {
         String message = exception.getConstraintViolations().stream()
                 .map(ConstraintViolation::getMessage)
                 .collect(Collectors.joining(", "));
 
-        ExceptionResponse response = ExceptionResponse.of(INVALID_INPUT.getStatus(), INVALID_INPUT.getCode(), message);
+        ExceptionResponse response = ExceptionResponse.of(INVALID_INPUT, message);
         return ResponseEntity.status(response.status()).body(response);
     }
 
@@ -56,7 +57,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .map(error -> error.getField() + ": " + error.getDefaultMessage())
                 .collect(Collectors.joining(", "));
 
-        ExceptionResponse response = ExceptionResponse.of(INVALID_INPUT.getStatus(), INVALID_INPUT.getCode(), message);
+        ExceptionResponse response = ExceptionResponse.of(INVALID_INPUT, message);
         return ResponseEntity.status(response.status()).body(response);
     }
 

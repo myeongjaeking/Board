@@ -13,11 +13,11 @@ public class MemberRepository {
   private final MemberJpaRepository memberJpaRepository;
 
   public Member findByEmail(String email) {
-    return memberJpaRepository.findByEmail(email);
+    return memberJpaRepository.findByEmail(email).orElseThrow(NO_AUTHENTICATED::newException);
   }
 
-  public void save(Member member) {
-    memberJpaRepository.save(member);
+  public Long save(Member member) {
+    return memberJpaRepository.save(member).getId();
   }
 
   public Member findById(Long memberId) {

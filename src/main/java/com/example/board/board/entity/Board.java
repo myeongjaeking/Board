@@ -1,5 +1,7 @@
 package com.example.board.board.entity;
 
+import static com.example.board.global.exception.GlobalExceptionCode.FORBIDDEN_ACCESS_BOARD;
+
 import com.example.board.member.entity.Member;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,7 +32,6 @@ public class Board {
   @Column(name = "title", nullable = false)
   private String title;
 
-  //이건 왜이럼? ㅋㅋ
   @Column(name = "content", nullable = false)
   private String content;
 
@@ -48,7 +49,7 @@ public class Board {
   private Member member;
 
   @Builder(builderMethodName = "create")
-  public Board(String title, String content, Member member) {
+  private Board(String title, String content, Member member) {
     this.title = title;
     this.content = content;
     this.createTime = LocalDateTime.now();
@@ -72,6 +73,12 @@ public class Board {
   public void update(String title, String content) {
     this.title = title;
     this.content = content;
+  }
+
+  public void validateAccess(Member member){
+    if(this.member.equals(member)){
+      throw FORBIDDEN_ACCESS_BOARD.newException();
+    }
   }
 
 }

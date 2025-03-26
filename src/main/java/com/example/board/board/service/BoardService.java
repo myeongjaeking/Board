@@ -10,11 +10,9 @@ import com.example.board.board.repository.BoardRepository;
 import com.example.board.comment.dto.response.CommentGetResponse;
 import com.example.board.comment.entity.Comment;
 import com.example.board.comment.repository.CommentRepository;
-import com.example.board.comment.service.CommentService;
 import com.example.board.global.common.SecurityUtil;
 import com.example.board.member.entity.Member;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -44,23 +42,26 @@ public class BoardService {
 
   @Transactional
   public BoardAndCommentGetResponse read(Long id) {
-    Member member = SecurityUtil.getMember();
-    Board board = boardRepository.findByMemberAndId(member, id);
+    Board board = boardRepository.findById(id);
 
-    List<Comment> comments = commentRepository.findByBoardId(id);
-    List<CommentGetResponse> commentResponses = comments.stream()
-        .map(CommentGetResponse::from)
-        .collect(Collectors.toList());
-
+    List<CommentGetResponse> commentResponses = getComments(id);
     board.incrementViewCount();
 
-    return BoardAndCommentGetResponse.from(board,commentResponses);
+    return BoardAndCommentGetResponse.from(board, commentResponses);
+  }
+
+  @Transactional(readOnly = true)
+  protected List<CommentGetResponse> getComments(Long id) {
+    List<Comment> comments = commentRepository.findByBoardId(id);
+    return comments.stream()
+        .map(CommentGetResponse::from)
+        .toList();
   }
 
   @Transactional
   public BoardGetResponse update(Long id, BoardUpdateRequest boardUpdateRequest) {
     Member member = SecurityUtil.getMember();
-    Board board = boardRepository.findByMemberAndId(member, id);
+    Board board = boardRepository.findById(member, id);
 
     board.update(boardUpdateRequest.title(), boardUpdateRequest.content());
 
@@ -68,11 +69,9 @@ public class BoardService {
   }
 
   @Transactional
-  public Long delete(Long id) {
+  public void delete(Long id) {
     Member member = SecurityUtil.getMember();
     boardRepository.delete(member, id);
-
-    return id;
   }
 
   @Transactional(readOnly = true)

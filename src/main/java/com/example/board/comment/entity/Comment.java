@@ -1,5 +1,7 @@
 package com.example.board.comment.entity;
 
+import static com.example.board.global.exception.GlobalExceptionCode.FORBIDDEN_ACCESS_COMMENT;
+
 import com.example.board.member.entity.Member;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,7 +38,7 @@ public class Comment {
   private Long boardId;
 
   @Builder(builderMethodName = "create")
-  public Comment(String content, Member member, Long boardId) {
+  private Comment(String content, Member member, Long boardId) {
     this.content = content;
     this.member = member;
     this.boardId = boardId;
@@ -44,6 +46,12 @@ public class Comment {
 
   public void updateContent(String content) {
     this.content = content;
+  }
+
+  public void validateAccess(Member member) {
+    if(this.member.equals(member)) {
+      throw FORBIDDEN_ACCESS_COMMENT.newException();
+    }
   }
 
 }

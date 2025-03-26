@@ -2,7 +2,6 @@ package com.example.board.like.service;
 
 import com.example.board.board.entity.Board;
 import com.example.board.board.repository.BoardRepository;
-import com.example.board.board.service.BoardService;
 import com.example.board.global.common.SecurityUtil;
 import com.example.board.like.entity.Likes;
 import com.example.board.like.repository.LikeRepository;
@@ -22,16 +21,16 @@ public class LikeService {
   public void doLike(Long boardId) {
     if (isLike(boardId)) {
       delete(boardId);
-    } else {
-      create(boardId);
+      return;
     }
+    create(boardId);
   }
 
   @Transactional(readOnly = true)
   public boolean isLike(Long boardId) {
     Member member = SecurityUtil.getMember();
-    //null 쓰지 마;;
-    return likeRepository.findByBoardIdAndMember(boardId, member) != null;
+
+    return likeRepository.existsByBoardIdAndMember(boardId,member);
   }
 
   @Transactional

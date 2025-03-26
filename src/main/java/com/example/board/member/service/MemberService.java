@@ -3,11 +3,13 @@ package com.example.board.member.service;
 import com.example.board.global.common.SecurityUtil;
 import com.example.board.member.dto.request.MemberCreateRequest;
 import com.example.board.member.dto.request.MemberUpdateNicknameRequest;
-import com.example.board.member.dto.response.MemberGetResponse;
+import com.example.board.member.dto.response.MemberCreateResponse;
+import com.example.board.member.dto.response.MemberUpdateResponse;
 import com.example.board.member.entity.Member;
 import com.example.board.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -15,27 +17,28 @@ public class MemberService {
 
   private final MemberRepository memberRepository;
 
-  public Member save(MemberCreateRequest memberCreateRequest) {
+  public MemberCreateResponse save(MemberCreateRequest memberCreateRequest) {
     Member member = Member.create()
         .email(memberCreateRequest.email())
         .nickname(memberCreateRequest.nickname())
         .password(memberCreateRequest.password())
         .build();
 
-    memberRepository.save(member);
+    Long memberId = memberRepository.save(member);
 
-    return member;
+    return MemberCreateResponse.builder()
+        .memberId(memberId)
+        .build();
   }
 
-  public MemberGetResponse update(MemberUpdateNicknameRequest nicknameRequest) {
+  @Transactional
+  public MemberUpdateResponse update(MemberUpdateNicknameRequest request) {
     Member member = SecurityUtil.getMember();
 
-    member.updateNickname(nicknameRequest.nickname());
+    member.updateNickname(request.nickname());
 
-    memberRepository.save(member);
-
-    return MemberGetResponse.builder()
-        .nickname(nicknameRequest.nickname())
+    return MemberUpdateResponse.builder()
+        .memberId(member.getId())
         .build();
   }
 

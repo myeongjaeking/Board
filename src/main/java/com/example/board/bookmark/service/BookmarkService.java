@@ -3,13 +3,11 @@ package com.example.board.bookmark.service;
 import com.example.board.board.dto.response.BoardGetResponse;
 import com.example.board.board.entity.Board;
 import com.example.board.board.repository.BoardRepository;
-import com.example.board.board.service.BoardService;
 import com.example.board.bookmark.entity.Bookmark;
 import com.example.board.bookmark.repository.BookmarkRepository;
 import com.example.board.global.common.SecurityUtil;
 import com.example.board.member.entity.Member;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,16 +23,16 @@ public class BookmarkService {
   public void doRegister(Long boardId) {
     if (isRegister(boardId)) {
       delete(boardId);
-    } else {
-      register(boardId);
+      return;
     }
+    register(boardId);
   }
 
   @Transactional(readOnly = true)
   public boolean isRegister(Long boardId) {
     Member member = SecurityUtil.getMember();
 
-    return bookmarkRepository.findByBoardIdAndMember(boardId, member) != null;
+    return bookmarkRepository.existsByBoardIdAndMember(boardId, member);
   }
 
   private void register(Long boardId) {
@@ -48,7 +46,8 @@ public class BookmarkService {
     bookmarkRepository.save(bookmark);
   }
 
-  private void delete(Long boardId) {
+  @Transactional
+  public void delete(Long boardId) {
     Member member = SecurityUtil.getMember();
 
     bookmarkRepository.delete(boardId, member);
@@ -64,7 +63,7 @@ public class BookmarkService {
 
     return boards.stream()
         .map(BoardGetResponse::from)
-        .collect(Collectors.toList());
+        .toList();
   }
 
 }

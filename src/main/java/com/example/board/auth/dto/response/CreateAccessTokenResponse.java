@@ -1,4 +1,4 @@
-package com.example.board.auth.dto;
+package com.example.board.auth.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

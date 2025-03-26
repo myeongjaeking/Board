@@ -1,6 +1,10 @@
 package com.example.board.comment.repository;
 
+import static com.example.board.global.exception.GlobalExceptionCode.NOT_FOUND_BOARD;
+import static com.example.board.global.exception.GlobalExceptionCode.NOT_FOUND_COMMENT;
+
 import com.example.board.comment.entity.Comment;
+import com.example.board.member.entity.Member;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -19,12 +23,17 @@ public class CommentRepository {
     return commentJpaRepository.findByBoardId(boardId);
   }
 
-  public Comment findByBoardIdAndId(Long boardId, Long id) {
-    return commentJpaRepository.findByBoardIdAndId(boardId, id);
+  public Comment findByBoardIdAndId(Long boardId, Long commentId, Member member) {
+    Comment comment = commentJpaRepository.findByBoardIdAndId(boardId, commentId)
+        .orElseThrow(NOT_FOUND_COMMENT::newException);
+
+    comment.validateAccess(member);
+
+    return comment;
   }
 
-  public void delete(Long boardId, Long id) {
-    Comment comment = findByBoardIdAndId(boardId,id);
+  public void delete(Long boardId, Long commentId, Member member) {
+    Comment comment = findByBoardIdAndId(boardId, commentId, member);
 
     commentJpaRepository.delete(comment);
   }

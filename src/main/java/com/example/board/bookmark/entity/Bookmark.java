@@ -1,5 +1,7 @@
 package com.example.board.bookmark.entity;
 
+import static com.example.board.global.exception.GlobalExceptionCode.FORBIDDEN_ACCESS_BOOKMARK;
+
 import com.example.board.member.entity.Member;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -33,9 +35,15 @@ public class Bookmark {
   private Long boardId;
 
   @Builder(builderMethodName = "create")
-  public Bookmark(Member member, Long boardId) {
+  private Bookmark(Member member, Long boardId) {
     this.boardId = boardId;
     this.member = member;
+  }
+
+  public void validateAccess(Member member){
+    if(this.member.equals(member)){
+      throw FORBIDDEN_ACCESS_BOOKMARK.newException();
+    }
   }
 
 }

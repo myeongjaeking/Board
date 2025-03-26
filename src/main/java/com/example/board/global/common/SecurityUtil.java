@@ -5,7 +5,6 @@ import static com.example.board.global.exception.GlobalExceptionCode.NO_AUTHENTI
 import com.example.board.global.exception.CustomException;
 import com.example.board.member.entity.Member;
 import com.example.board.member.repository.MemberRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;

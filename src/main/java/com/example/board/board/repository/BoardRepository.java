@@ -21,10 +21,18 @@ public class BoardRepository {
     boardJpaRepository.save(board);
   }
 
-  public Board findByMemberAndId(Member member, Long id) {
-
-    return boardJpaRepository.findByMemberAndId(member, id)
+  public Board findById(Long id) {
+    return boardJpaRepository.findById(id)
         .orElseThrow(NOT_FOUND_BOARD::newException);
+  }
+
+  public Board findById(Member member, Long id) {
+    Board board = boardJpaRepository.findById(id)
+        .orElseThrow(NOT_FOUND_BOARD::newException);
+
+    board.validateAccess(member);
+
+    return board;
   }
 
   public List<Board> findAllById(List<Long> id) {
@@ -32,18 +40,13 @@ public class BoardRepository {
   }
 
   public void delete(Member member,Long id) {
-    boardJpaRepository.findByMemberAndId(member,id)
-        .orElseThrow(NOT_FOUND_BOARD::newException);
+    Board board = findById(member,id);
 
-    boardJpaRepository.deleteById(id);
+    boardJpaRepository.delete(board);
   }
 
   public Page<Board> findAll(Pageable pageable) {
     return boardJpaRepository.findAll(pageable);
-  }
-
-  public Board findById(Long id){
-    return boardJpaRepository.findById(id).orElseThrow();
   }
 
 }

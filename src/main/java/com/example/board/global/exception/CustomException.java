@@ -9,13 +9,6 @@ public class CustomException extends RuntimeException {
     private final String code;
     private final String message;
 
-    public CustomException(int status, String code, String message) {
-        super(message);
-        this.status = status;
-        this.code = code;
-        this.message = message;
-    }
-
     public CustomException(ExceptionCode code) {
         super(code.getMessage());
         this.status = code.getStatus();

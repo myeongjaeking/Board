@@ -39,21 +39,23 @@ public class BoardController {
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<BoardGetResponse> update(@PathVariable("id") Long id,
-      @RequestBody @Valid BoardUpdateRequest boardUpdateRequest) {
+  public ResponseEntity<BoardGetResponse> update(
+      @PathVariable("id") Long id,
+      @RequestBody @Valid BoardUpdateRequest boardUpdateRequest
+  ) {
     BoardGetResponse boardGetResponse = boardService.update(id, boardUpdateRequest);
 
     return ResponseEntity.status(HttpStatus.NO_CONTENT).body(boardGetResponse);
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<Long> delete(@PathVariable("id") Long id) {
-    Long boardId = boardService.delete(id);
+  public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
+    boardService.delete(id);
 
-    return ResponseEntity.status(HttpStatus.OK).body(boardId);
+    return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
 
-  //오름차순으로 -> pageable 순재는 안 씀 명재도 안 쓸 예정
+  //오름차순으로 -> pageable 순재는 안 씀 명재도 안 쓸 예정 나중에
   @GetMapping("/list")
   public ResponseEntity<Page<BoardPageResponse>> page(
       @PageableDefault(page = 0, size = 3, sort = "id", direction = Sort.Direction.DESC) Pageable page) {

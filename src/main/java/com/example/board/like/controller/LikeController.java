@@ -28,7 +28,7 @@ public class LikeController {
   public ResponseEntity<?> getLike(@PathVariable("id") Long id) {
     boolean isLike = likeService.isLike(id);
 
-    return ResponseEntity.status(HttpStatus.CREATED).body(isLike);
+    return ResponseEntity.status(HttpStatus.OK).body(isLike);
   }
 
 }

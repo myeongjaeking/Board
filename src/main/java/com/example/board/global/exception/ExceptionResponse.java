@@ -1,16 +1,9 @@
 package com.example.board.global.exception;
 
-import org.springframework.http.HttpStatus;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.Builder;
 
+@Builder
 public record ExceptionResponse(int status, String code, String message) {
-
-    @Builder
-    public ExceptionResponse {
-    }
 
     public static ExceptionResponse from(CustomException exception) {
         return ExceptionResponse.builder()
@@ -20,11 +13,12 @@ public record ExceptionResponse(int status, String code, String message) {
             .build();
     }
 
-    public static ExceptionResponse of(int status, String code, String message) {
+    public static ExceptionResponse of(ExceptionCode exceptionCode, String message) {
         return ExceptionResponse.builder()
-            .status(status)
-            .code(code)
+            .status(exceptionCode.getStatus())
+            .code(exceptionCode.getCode())
             .message(message)
             .build();
     }
+
 }

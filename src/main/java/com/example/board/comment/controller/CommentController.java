@@ -4,6 +4,7 @@ import com.example.board.comment.dto.request.CommentCreateRequest;
 import com.example.board.comment.dto.request.CommentUpdateRequest;
 import com.example.board.comment.dto.response.CommentGetResponse;
 import com.example.board.comment.service.CommentService;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,8 +26,10 @@ public class CommentController {
   private final CommentService commentService;
 
   @PostMapping("/create")
-  public ResponseEntity<CommentGetResponse> create(@PathVariable("boardId") Long boardId,
-      @RequestBody CommentCreateRequest commentCreateRequest) {
+  public ResponseEntity<CommentGetResponse> create(
+      @PathVariable("boardId") Long boardId,
+      @Valid @RequestBody CommentCreateRequest commentCreateRequest
+  ) {
     CommentGetResponse commentGetResponse = commentService.create(boardId, commentCreateRequest);
 
     return ResponseEntity.status(HttpStatus.CREATED).body(commentGetResponse);
@@ -40,20 +43,24 @@ public class CommentController {
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<CommentGetResponse> update(@PathVariable("boardId") Long boardId,
-      @PathVariable("id") Long id, @RequestBody
-  CommentUpdateRequest commentUpdateRequest) {
+  public ResponseEntity<CommentGetResponse> update(
+      @PathVariable("boardId") Long boardId,
+      @PathVariable("id") Long id,
+      @Valid @RequestBody CommentUpdateRequest commentUpdateRequest
+  ) {
     CommentGetResponse commentGetResponse = commentService.update(boardId,id,commentUpdateRequest);
 
     return ResponseEntity.status(HttpStatus.OK).body(commentGetResponse);
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<Long> delete(@PathVariable("boardId") Long boardId,
-      @PathVariable("id") Long id) {
-    Long commentId = commentService.delete(boardId,id);
+  public ResponseEntity<Void> delete(
+      @PathVariable("boardId") Long boardId,
+      @PathVariable("id") Long id
+  ) {
+    commentService.delete(boardId,id);
 
-    return ResponseEntity.status(HttpStatus.OK).body(commentId);
+    return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
 
 }

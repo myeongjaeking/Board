@@ -1,14 +1,13 @@
 package com.example.board.member.controller;
 
-import com.example.board.global.common.SecurityUtil;
 import com.example.board.member.dto.request.MemberUpdateNicknameRequest;
-import com.example.board.member.dto.response.MemberGetResponse;
-import com.example.board.member.entity.Member;
+import com.example.board.member.dto.response.MemberCreateResponse;
+import com.example.board.member.dto.response.MemberUpdateResponse;
 import com.example.board.member.service.MemberService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,19 +20,12 @@ public class MemberController {
 
   private final MemberService memberService;
 
-  @GetMapping("/get")
-  public ResponseEntity<Member> getMember() {
-    Member member = SecurityUtil.getMember();
-
-    return ResponseEntity.status(HttpStatus.CREATED).body(member);
-  }
-
   @PatchMapping("/update")
-  public ResponseEntity<MemberGetResponse> update(
-      @RequestBody MemberUpdateNicknameRequest nicknameRequest) {
-    MemberGetResponse memberGetResponse = memberService.update(nicknameRequest);
+  public ResponseEntity<MemberUpdateResponse> update(
+      @Valid @RequestBody MemberUpdateNicknameRequest request) {
+    MemberUpdateResponse memberUpdateResponse = memberService.update(request);
 
-    return ResponseEntity.status(HttpStatus.OK).body(memberGetResponse);
+    return ResponseEntity.status(HttpStatus.OK).body(memberUpdateResponse);
   }
 
 }

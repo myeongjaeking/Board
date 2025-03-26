@@ -18,7 +18,6 @@ public class CommentService {
 
   private final CommentRepository commentRepository;
 
-  @Transactional
   public CommentGetResponse create(Long boardId, CommentCreateRequest commentCreateRequest) {
     Member member = SecurityUtil.getMember();
 
@@ -43,9 +42,13 @@ public class CommentService {
   }
 
   @Transactional
-  public CommentGetResponse update(Long boardId, Long id,
-      CommentUpdateRequest commentUpdateRequest) {
-    Comment comment = commentRepository.findByBoardIdAndId(boardId,id);
+  public CommentGetResponse update(
+      Long boardId,
+      Long id,
+      CommentUpdateRequest commentUpdateRequest
+  ) {
+    Member member = SecurityUtil.getMember();
+    Comment comment = commentRepository.findByBoardIdAndId(boardId, id, member);
 
     comment.updateContent(commentUpdateRequest.content());
 
@@ -53,10 +56,10 @@ public class CommentService {
   }
 
   @Transactional
-  public Long delete(Long boardId, Long id) {
-    commentRepository.delete(boardId,id);
+  public void delete(Long boardId, Long commentId) {
+    Member member = SecurityUtil.getMember();
 
-    return id;
+    commentRepository.delete(boardId, commentId, member);
   }
 
 }

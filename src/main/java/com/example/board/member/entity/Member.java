@@ -7,17 +7,16 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 @Table(name = "members")
+@Entity
 public class Member {
 
   @Id
@@ -41,7 +40,7 @@ public class Member {
   private Role role;
 
   @Builder(builderMethodName = "create")
-  public Member(String email, String password, String nickname){
+  private Member(String email, String password, String nickname){
     this.email = email;
     this.password = password;
     this.nickname = nickname;
