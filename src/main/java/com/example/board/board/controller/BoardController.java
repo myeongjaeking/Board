@@ -55,7 +55,7 @@ public class BoardController {
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
 
-  //오름차순으로 -> pageable 순재는 안 씀 명재도 안 쓸 예정 나중에
+  //TODO QueryDSL Study
   @GetMapping("/list")
   public ResponseEntity<Page<BoardPageResponse>> page(
       @PageableDefault(page = 0, size = 3, sort = "id", direction = Sort.Direction.DESC) Pageable page) {

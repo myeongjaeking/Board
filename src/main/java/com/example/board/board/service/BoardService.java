@@ -37,7 +37,13 @@ public class BoardService {
         .build();
     boardRepository.save(board);
 
-    return BoardGetResponse.from(board);
+    return BoardGetResponse.builder()
+        .title(board.getTitle())
+        .content(board.getContent())
+        .createTime(board.getCreateTime())
+        .viewCount(board.getViewCount())
+        .likeCount(board.getLikeCount())
+        .build();
   }
 
   @Transactional
@@ -47,7 +53,14 @@ public class BoardService {
     List<CommentGetResponse> commentResponses = getComments(id);
     board.incrementViewCount();
 
-    return BoardAndCommentGetResponse.from(board, commentResponses);
+    return BoardAndCommentGetResponse.builder()
+        .title(board.getTitle())
+        .content(board.getContent())
+        .createTime(board.getCreateTime())
+        .viewCount(board.getViewCount())
+        .likeCount(board.getLikeCount())
+        .commentList(commentResponses)
+        .build();
   }
 
   @Transactional(readOnly = true)
@@ -65,12 +78,19 @@ public class BoardService {
 
     board.update(boardUpdateRequest.title(), boardUpdateRequest.content());
 
-    return BoardGetResponse.from(board);
+    return BoardGetResponse.builder()
+        .title(board.getTitle())
+        .content(board.getContent())
+        .createTime(board.getCreateTime())
+        .viewCount(board.getViewCount())
+        .likeCount(board.getLikeCount())
+        .build();
   }
 
   @Transactional
   public void delete(Long id) {
     Member member = SecurityUtil.getMember();
+
     boardRepository.delete(member, id);
   }
 

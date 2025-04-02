@@ -17,21 +17,4 @@ public record BoardAndCommentGetResponse(
     List<CommentGetResponse> commentList
 ) {
 
-  //Response 에 굳이 엔티티 안 넣을 듯 나중에 ㅇㅇ
-  public static BoardAndCommentGetResponse from(
-      Board board,
-      List<CommentGetResponse> commentList
-  ) {
-    return BoardAndCommentGetResponse.builder()
-        .commentList(commentList)
-        .title(board.getTitle())
-        .content(board.getContent())
-        .createTime(board.getCreateTime())
-        .nickname(board.getMember().getNickname())
-        .viewCount(board.getViewCount())
-        .likeCount(board.getLikeCount())
-        .commentList(commentList)
-        .build();
-  }
-
 }

@@ -18,7 +18,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-//연관관게 공부하기.
 @Table(name = "boards")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter

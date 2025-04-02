@@ -1,5 +1,6 @@
 package com.example.board.comment.service;
 
+import com.example.board.board.dto.response.BoardGetResponse;
 import com.example.board.comment.dto.request.CommentCreateRequest;
 import com.example.board.comment.dto.request.CommentUpdateRequest;
 import com.example.board.comment.dto.response.CommentGetResponse;
@@ -8,6 +9,7 @@ import com.example.board.comment.repository.CommentRepository;
 import com.example.board.global.common.SecurityUtil;
 import com.example.board.member.entity.Member;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +31,11 @@ public class CommentService {
 
     commentRepository.save(comment);
 
-    return CommentGetResponse.from(comment);
+    return CommentGetResponse.builder()
+        .boardId(comment.getBoardId())
+        .content(comment.getContent())
+        .nickname(comment.getMember().getNickname())
+        .build();
   }
 
   @Transactional(readOnly = true)
@@ -37,7 +43,11 @@ public class CommentService {
     List<Comment> commentList = commentRepository.findByBoardId(boardId);
 
     return commentList.stream()
-        .map(CommentGetResponse::from)
+        .map(comment -> CommentGetResponse.builder()
+            .boardId(comment.getBoardId())
+            .content(comment.getContent())
+            .nickname(comment.getMember().getNickname())
+            .build())
         .toList();
   }
 
@@ -52,7 +62,11 @@ public class CommentService {
 
     comment.updateContent(commentUpdateRequest.content());
 
-    return CommentGetResponse.from(comment);
+    return CommentGetResponse.builder()
+        .content(comment.getContent())
+        .nickname(comment.getMember().getNickname())
+        .boardId(comment.getBoardId())
+        .build();
   }
 
   @Transactional

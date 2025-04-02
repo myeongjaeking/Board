@@ -19,9 +19,8 @@ public class TokenService {
 
   public String createNewAccessToken(CreateAccessTokenRequest createAccessTokenRequest) {
     if (!tokenProvider.validToken(createAccessTokenRequest.getRefreshToken())) {
-      throw new CustomException(NOT_VALID_REFRESH_TOKEN);
+      throw NOT_VALID_REFRESH_TOKEN.newException();
     }
-
     Member member = SecurityUtil.getMember();
 
     return tokenProvider.generateToken(member, Duration.ofHours(2));

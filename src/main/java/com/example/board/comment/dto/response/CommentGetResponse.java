@@ -10,12 +10,4 @@ public record CommentGetResponse(
     Long boardId
 ) {
 
-  public static CommentGetResponse from(Comment comment) {
-    return CommentGetResponse.builder()
-        .content(comment.getContent())
-        .nickname(comment.getMember().getNickname())
-        .boardId(comment.getBoardId())
-        .build();
-  }
-
 }

@@ -1,6 +1,7 @@
 package com.example.board.global.security.jwt;
 
 import com.example.board.member.entity.Member;
+import com.example.board.member.entity.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -68,7 +69,7 @@ public class TokenProvider {
   public UsernamePasswordAuthenticationToken getAuthentication(String token) {
     Claims claims = getClaims(token);
     Set<SimpleGrantedAuthority> authorities = Collections.singleton(
-        new SimpleGrantedAuthority("ROLE_USER"));
+        new SimpleGrantedAuthority(Role.MEMBER.getValue()));
 
     return new UsernamePasswordAuthenticationToken(
         new org.springframework.security.core.userdetails.User(claims.getSubject(), "",

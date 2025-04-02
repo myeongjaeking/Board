@@ -8,6 +8,7 @@ import com.example.board.bookmark.repository.BookmarkRepository;
 import com.example.board.global.common.SecurityUtil;
 import com.example.board.member.entity.Member;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -62,8 +63,14 @@ public class BookmarkService {
     List<Board> boards = boardRepository.findAllById(boardIds);
 
     return boards.stream()
-        .map(BoardGetResponse::from)
-        .toList();
+        .map(board -> BoardGetResponse.builder()
+            .title(board.getTitle())
+            .content(board.getContent())
+            .createTime(board.getCreateTime())
+            .viewCount(board.getViewCount())
+            .likeCount(board.getLikeCount())
+            .build())
+        .collect(Collectors.toList());
   }
 
 }

@@ -1,6 +1,5 @@
 package com.example.board.comment.repository;
 
-import static com.example.board.global.exception.GlobalExceptionCode.NOT_FOUND_BOARD;
 import static com.example.board.global.exception.GlobalExceptionCode.NOT_FOUND_COMMENT;
 
 import com.example.board.comment.entity.Comment;

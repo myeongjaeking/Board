@@ -15,15 +15,4 @@ public record BoardGetResponse(
     int likeCount
 ) {
 
-  public static BoardGetResponse from(Board board) {
-    return BoardGetResponse.builder()
-        .title(board.getTitle())
-        .content(board.getContent())
-        .createTime(board.getCreateTime())
-        .nickname(board.getMember().getNickname())
-        .viewCount(board.getViewCount())
-        .likeCount(board.getLikeCount())
-        .build();
-  }
-
 }
