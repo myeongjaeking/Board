@@ -22,20 +22,20 @@ public class BookmarkRepository {
     return bookmarkJpaRepository.findByBoardId(boardId).orElseThrow(NOT_FOUND_BOOKMARK::newException);
   }
 
-  public void delete(Long boardId, Member member) {
+  public void delete(Long boardId, String nickname) {
     Bookmark bookmark = findByBoardId(boardId);
 
-    bookmark.validateAccess(member);
+    bookmark.validateAccess(nickname);
 
     bookmarkJpaRepository.delete(bookmark);
   }
 
-  public List<Long> findBoardIdByMember(Member member) {
-    return bookmarkJpaRepository.findBoardIdByMember(member);
+  public List<Long> findBoardIdByMember(String nickname) {
+    return bookmarkJpaRepository.findBoardIdByMember(nickname);
   }
 
-  public boolean existsByBoardIdAndMember(Long boardId, Member member) {
-    return bookmarkJpaRepository.existsByBoardIdAndMember(boardId, member);
+  public boolean existsByBoardIdAndNickname(Long boardId, String nickname) {
+    return bookmarkJpaRepository.existsByBoardIdAndNickname(boardId, nickname);
   }
 
 }

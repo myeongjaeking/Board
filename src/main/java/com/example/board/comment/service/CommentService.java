@@ -21,12 +21,12 @@ public class CommentService {
   private final CommentRepository commentRepository;
 
   public CommentGetResponse create(Long boardId, CommentCreateRequest commentCreateRequest) {
-    Member member = SecurityUtil.getMember();
+    String nickname = SecurityUtil.getNickname();
 
     Comment comment = Comment.create()
         .boardId(boardId)
         .content(commentCreateRequest.content())
-        .member(member)
+        .nickname(nickname)
         .build();
 
     commentRepository.save(comment);
@@ -34,7 +34,7 @@ public class CommentService {
     return CommentGetResponse.builder()
         .boardId(comment.getBoardId())
         .content(comment.getContent())
-        .nickname(comment.getMember().getNickname())
+        .nickname(comment.getNickname())
         .build();
   }
 
@@ -46,7 +46,7 @@ public class CommentService {
         .map(comment -> CommentGetResponse.builder()
             .boardId(comment.getBoardId())
             .content(comment.getContent())
-            .nickname(comment.getMember().getNickname())
+            .nickname(comment.getNickname())
             .build())
         .toList();
   }
@@ -57,23 +57,23 @@ public class CommentService {
       Long id,
       CommentUpdateRequest commentUpdateRequest
   ) {
-    Member member = SecurityUtil.getMember();
-    Comment comment = commentRepository.findByBoardIdAndId(boardId, id, member);
+    String nickname = SecurityUtil.getNickname();
+    Comment comment = commentRepository.findByBoardIdAndId(boardId, id, nickname);
 
     comment.updateContent(commentUpdateRequest.content());
 
     return CommentGetResponse.builder()
         .content(comment.getContent())
-        .nickname(comment.getMember().getNickname())
+        .nickname(comment.getNickname())
         .boardId(comment.getBoardId())
         .build();
   }
 
   @Transactional
   public void delete(Long boardId, Long commentId) {
-    Member member = SecurityUtil.getMember();
+    String nickname = SecurityUtil.getNickname();
 
-    commentRepository.delete(boardId, commentId, member);
+    commentRepository.delete(boardId, commentId, nickname);
   }
 
 }

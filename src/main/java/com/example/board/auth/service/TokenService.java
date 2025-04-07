@@ -7,6 +7,7 @@ import com.example.board.global.common.SecurityUtil;
 import com.example.board.global.security.jwt.TokenProvider;
 import com.example.board.global.exception.CustomException;
 import com.example.board.member.entity.Member;
+import com.example.board.member.repository.MemberRepository;
 import java.time.Duration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,12 +17,14 @@ import org.springframework.stereotype.Service;
 public class TokenService {
 
   private final TokenProvider tokenProvider;
+  private final MemberRepository memberRepository;
 
   public String createNewAccessToken(CreateAccessTokenRequest createAccessTokenRequest) {
     if (!tokenProvider.validToken(createAccessTokenRequest.getRefreshToken())) {
       throw NOT_VALID_REFRESH_TOKEN.newException();
     }
-    Member member = SecurityUtil.getMember();
+    String nickname = SecurityUtil.getNickname();
+    Member member = memberRepository.findByNickname(nickname);
 
     return tokenProvider.generateToken(member, Duration.ofHours(2));
   }

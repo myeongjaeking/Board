@@ -15,17 +15,17 @@ public class LikeRepository {
     likeJpaRepository.save(likes);
   }
 
-  public void delete(Long boardId, Member member) {
-    Likes likes = findByBoardIdAndMember(boardId,member);
+  public void delete(Long boardId, String nickname) {
+    Likes likes = findByBoardIdAndNickname(boardId,nickname);
     likeJpaRepository.delete(likes);
   }
 
-  public Likes findByBoardIdAndMember(Long boardId, Member member) {
-    return likeJpaRepository.findByBoardIdAndMember(boardId, member).orElseThrow();
+  public Likes findByBoardIdAndNickname(Long boardId, String nickname) {
+    return likeJpaRepository.findByBoardIdAndNickname(boardId, nickname).orElseThrow();
   }
 
-  public boolean existsByBoardIdAndMember(Long boardId, Member member) {
-    return likeJpaRepository.existsByBoardIdAndMember(boardId, member);
+  public boolean existsByBoardIdAndNickname(Long boardId, String nickname) {
+    return likeJpaRepository.existsByBoardIdAndNickname(boardId, nickname);
   }
 
 }

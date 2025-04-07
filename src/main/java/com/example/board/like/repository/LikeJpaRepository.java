@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LikeJpaRepository extends JpaRepository<Likes, Long> {
 
-  Optional<Likes> findByBoardIdAndMember(Long boardId, Member member);
+  Optional<Likes> findByBoardIdAndNickname(Long boardId, String nickname);
 
-  boolean existsByBoardIdAndMember(Long boardId, Member member);
+  boolean existsByBoardIdAndNickname(Long boardId, String nickname);
 
 }

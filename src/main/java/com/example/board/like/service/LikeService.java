@@ -28,18 +28,18 @@ public class LikeService {
 
   @Transactional(readOnly = true)
   public boolean isLike(Long boardId) {
-    Member member = SecurityUtil.getMember();
+    String nickname = SecurityUtil.getNickname();
 
-    return likeRepository.existsByBoardIdAndMember(boardId,member);
+    return likeRepository.existsByBoardIdAndNickname(boardId,nickname);
   }
 
   @Transactional
   protected void create(Long boardId) {
-    Member member = SecurityUtil.getMember();
+    String nickname = SecurityUtil.getNickname();
 
     Likes likes = Likes.create()
         .boardId(boardId)
-        .member(member)
+        .nickname(nickname)
         .build();
 
     likeRepository.save(likes);
@@ -50,9 +50,9 @@ public class LikeService {
 
   @Transactional
   protected void delete(Long boardId) {
-    Member member = SecurityUtil.getMember();
+    String nickname = SecurityUtil.getNickname();
 
-    likeRepository.delete(boardId, member);
+    likeRepository.delete(boardId, nickname);
 
     Board board = boardRepository.findById(boardId);
     board.decrementLikeCount();

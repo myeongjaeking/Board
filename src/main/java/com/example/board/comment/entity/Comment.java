@@ -30,17 +30,16 @@ public class Comment {
   @Column(name = "content", nullable = false)
   private String content;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "member_id")
-  private Member member;
+  @Column(name = "nickname",nullable = false)
+  private String nickname;
 
   @Column(name = "board_id", nullable = false)
   private Long boardId;
 
   @Builder(builderMethodName = "create")
-  private Comment(String content, Member member, Long boardId) {
+  private Comment(String content, String nickname, Long boardId) {
     this.content = content;
-    this.member = member;
+    this.nickname = nickname;
     this.boardId = boardId;
   }
 
@@ -48,8 +47,8 @@ public class Comment {
     this.content = content;
   }
 
-  public void validateAccess(Member member) {
-    if(this.member.equals(member)) {
+  public void validateAccess(String nickname) {
+    if(this.nickname.equals(nickname)) {
       throw FORBIDDEN_ACCESS_COMMENT.newException();
     }
   }

@@ -1,6 +1,5 @@
 package com.example.board.comment.dto.response;
 
-import com.example.board.comment.entity.Comment;
 import lombok.Builder;
 
 @Builder

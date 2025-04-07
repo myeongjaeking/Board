@@ -25,17 +25,16 @@ public class Likes {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "member_id")
-  private Member member;
+  @Column(name = "nickname",nullable = false)
+  private String nickname;
 
   @Column(name = "board_id",nullable = false)
   private Long boardId;
 
   @Builder(builderMethodName = "create")
-  private Likes(Member member, Long boardId){
+  private Likes(String nickname, Long boardId){
     this.boardId = boardId;
-    this.member = member;
+    this.nickname = nickname;
   }
 
 }

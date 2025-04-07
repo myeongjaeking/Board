@@ -43,16 +43,15 @@ public class Board {
   @Column(name = "create_time", nullable = false)
   private LocalDateTime createTime;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "member_id")
-  private Member member;
+  @Column(name = "member_nickname", nullable = false)
+  private String nickname;
 
   @Builder(builderMethodName = "create")
-  private Board(String title, String content, Member member) {
+  private Board(String title, String content, String nickname) {
     this.title = title;
     this.content = content;
     this.createTime = LocalDateTime.now();
-    this.member = member;
+    this.nickname = nickname;
     this.viewCount = 0;
     this.likeCount = 0;
   }
@@ -74,8 +73,8 @@ public class Board {
     this.content = content;
   }
 
-  public void validateAccess(Member member){
-    if(this.member.equals(member)){
+  public void validateAccess(String nickname){
+    if(this.nickname.equals(nickname)){
       throw FORBIDDEN_ACCESS_BOARD.newException();
     }
   }

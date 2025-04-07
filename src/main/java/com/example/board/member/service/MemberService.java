@@ -1,5 +1,7 @@
 package com.example.board.member.service;
 
+import static com.example.board.global.exception.GlobalExceptionCode.DUPLICATION_NICKNAME;
+
 import com.example.board.global.common.SecurityUtil;
 import com.example.board.member.dto.request.MemberCreateRequest;
 import com.example.board.member.dto.request.MemberUpdateNicknameRequest;
@@ -33,7 +35,12 @@ public class MemberService {
 
   @Transactional
   public MemberUpdateResponse update(MemberUpdateNicknameRequest request) {
-    Member member = SecurityUtil.getMember();
+    String nickname = SecurityUtil.getNickname();
+    Member member = memberRepository.findByNickname(nickname);
+
+    if(memberRepository.existsByNickname(request.nickname())){
+      throw DUPLICATION_NICKNAME.newException();
+    }
 
     member.updateNickname(request.nickname());
 

@@ -27,21 +27,20 @@ public class Bookmark {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "member_id")
-  private Member member;
+  @Column(name = "nickname",nullable = false)
+  private String nickname;
 
   @Column(name = "board_id", nullable = false)
   private Long boardId;
 
   @Builder(builderMethodName = "create")
-  private Bookmark(Member member, Long boardId) {
+  private Bookmark(String nickname, Long boardId) {
     this.boardId = boardId;
-    this.member = member;
+    this.nickname = nickname;
   }
 
-  public void validateAccess(Member member){
-    if(this.member.equals(member)){
+  public void validateAccess(String nickname){
+    if(this.nickname.equals(nickname)){
       throw FORBIDDEN_ACCESS_BOOKMARK.newException();
     }
   }

@@ -66,7 +66,8 @@ public class AuthService {
   }
 
   public Long logout() {
-    Member member = SecurityUtil.getMember();
+    String nickname = SecurityUtil.getNickname();
+    Member member = memberRepository.findByNickname(nickname);
 
     member.updateRefreshToken(null);
 

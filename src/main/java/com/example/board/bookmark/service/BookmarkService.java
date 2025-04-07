@@ -31,17 +31,17 @@ public class BookmarkService {
 
   @Transactional(readOnly = true)
   public boolean isRegister(Long boardId) {
-    Member member = SecurityUtil.getMember();
+    String nickname = SecurityUtil.getNickname();
 
-    return bookmarkRepository.existsByBoardIdAndMember(boardId, member);
+    return bookmarkRepository.existsByBoardIdAndNickname(boardId, nickname);
   }
 
   private void register(Long boardId) {
-    Member member = SecurityUtil.getMember();
+    String nickname = SecurityUtil.getNickname();
 
     Bookmark bookmark = Bookmark.create()
         .boardId(boardId)
-        .member(member)
+        .nickname(nickname)
         .build();
 
     bookmarkRepository.save(bookmark);
@@ -49,16 +49,16 @@ public class BookmarkService {
 
   @Transactional
   public void delete(Long boardId) {
-    Member member = SecurityUtil.getMember();
+    String nickname = SecurityUtil.getNickname();
 
-    bookmarkRepository.delete(boardId, member);
+    bookmarkRepository.delete(boardId, nickname);
   }
 
   @Transactional(readOnly = true)
   public List<BoardGetResponse> getBookmarks() {
-    Member member = SecurityUtil.getMember();
+    String nickname = SecurityUtil.getNickname();
 
-    List<Long> boardIds = bookmarkRepository.findBoardIdByMember(member);
+    List<Long> boardIds = bookmarkRepository.findBoardIdByMember(nickname);
 
     List<Board> boards = boardRepository.findAllById(boardIds);
 

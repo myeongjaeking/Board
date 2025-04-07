@@ -22,17 +22,17 @@ public class CommentRepository {
     return commentJpaRepository.findByBoardId(boardId);
   }
 
-  public Comment findByBoardIdAndId(Long boardId, Long commentId, Member member) {
+  public Comment findByBoardIdAndId(Long boardId, Long commentId, String nickname) {
     Comment comment = commentJpaRepository.findByBoardIdAndId(boardId, commentId)
         .orElseThrow(NOT_FOUND_COMMENT::newException);
 
-    comment.validateAccess(member);
+    comment.validateAccess(nickname);
 
     return comment;
   }
 
-  public void delete(Long boardId, Long commentId, Member member) {
-    Comment comment = findByBoardIdAndId(boardId, commentId, member);
+  public void delete(Long boardId, Long commentId, String nickname) {
+    Comment comment = findByBoardIdAndId(boardId, commentId, nickname);
 
     commentJpaRepository.delete(comment);
   }

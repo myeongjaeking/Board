@@ -26,11 +26,11 @@ public class BoardRepository {
         .orElseThrow(NOT_FOUND_BOARD::newException);
   }
 
-  public Board findById(Member member, Long id) {
+  public Board findById(String nickname, Long id) {
     Board board = boardJpaRepository.findById(id)
         .orElseThrow(NOT_FOUND_BOARD::newException);
 
-    board.validateAccess(member);
+    board.validateAccess(nickname);
 
     return board;
   }
@@ -39,8 +39,8 @@ public class BoardRepository {
     return boardJpaRepository.findAllById(id);
   }
 
-  public void delete(Member member,Long id) {
-    Board board = findById(member,id);
+  public void delete(String nickname,Long id) {
+    Board board = findById(nickname,id);
 
     boardJpaRepository.delete(board);
   }

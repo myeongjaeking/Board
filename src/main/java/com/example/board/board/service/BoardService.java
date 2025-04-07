@@ -28,18 +28,19 @@ public class BoardService {
 
   @Transactional
   public BoardGetResponse create(BoardCreateRequest boardCreateRequest) {
-    Member member = SecurityUtil.getMember();
+    String nickname = SecurityUtil.getNickname();
 
     Board board = Board.create()
         .title(boardCreateRequest.title())
         .content(boardCreateRequest.content())
-        .member(member)
+        .nickname(nickname)
         .build();
     boardRepository.save(board);
 
     return BoardGetResponse.builder()
         .title(board.getTitle())
         .content(board.getContent())
+        .nickname(board.getNickname())
         .createTime(board.getCreateTime())
         .viewCount(board.getViewCount())
         .likeCount(board.getLikeCount())
@@ -56,6 +57,7 @@ public class BoardService {
     return BoardAndCommentGetResponse.builder()
         .title(board.getTitle())
         .content(board.getContent())
+        .nickname(board.getNickname())
         .createTime(board.getCreateTime())
         .viewCount(board.getViewCount())
         .likeCount(board.getLikeCount())
@@ -66,20 +68,27 @@ public class BoardService {
   @Transactional(readOnly = true)
   protected List<CommentGetResponse> getComments(Long id) {
     List<Comment> comments = commentRepository.findByBoardId(id);
+
     return comments.stream()
-        .map(CommentGetResponse::from)
+        .map(comment -> CommentGetResponse.builder()
+            .content(comment.getContent())
+            .nickname(comment.getNickname())
+            .boardId(comment.getBoardId())
+            .build()
+        )
         .toList();
   }
 
   @Transactional
   public BoardGetResponse update(Long id, BoardUpdateRequest boardUpdateRequest) {
-    Member member = SecurityUtil.getMember();
-    Board board = boardRepository.findById(member, id);
+    String nickname = SecurityUtil.getNickname();
+    Board board = boardRepository.findById(nickname, id);
 
     board.update(boardUpdateRequest.title(), boardUpdateRequest.content());
 
     return BoardGetResponse.builder()
         .title(board.getTitle())
+        .nickname(board.getNickname())
         .content(board.getContent())
         .createTime(board.getCreateTime())
         .viewCount(board.getViewCount())
@@ -89,9 +98,9 @@ public class BoardService {
 
   @Transactional
   public void delete(Long id) {
-    Member member = SecurityUtil.getMember();
+    String nickname = SecurityUtil.getNickname();
 
-    boardRepository.delete(member, id);
+    boardRepository.delete(nickname, id);
   }
 
   @Transactional(readOnly = true)
