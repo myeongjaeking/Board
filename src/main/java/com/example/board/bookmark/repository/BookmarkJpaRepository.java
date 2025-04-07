@@ -1,7 +1,6 @@
 package com.example.board.bookmark.repository;
 
 import com.example.board.bookmark.entity.Bookmark;
-import com.example.board.member.entity.Member;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;

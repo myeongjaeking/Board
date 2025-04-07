@@ -1,15 +1,12 @@
 package com.example.board.comment.service;
 
-import com.example.board.board.dto.response.BoardGetResponse;
 import com.example.board.comment.dto.request.CommentCreateRequest;
 import com.example.board.comment.dto.request.CommentUpdateRequest;
 import com.example.board.comment.dto.response.CommentGetResponse;
 import com.example.board.comment.entity.Comment;
 import com.example.board.comment.repository.CommentRepository;
 import com.example.board.global.common.SecurityUtil;
-import com.example.board.member.entity.Member;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,7 +1,6 @@
 package com.example.board.like.repository;
 
 import com.example.board.like.entity.Likes;
-import com.example.board.member.entity.Member;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 

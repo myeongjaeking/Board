@@ -1,6 +1,5 @@
 package com.example.board.board.dto.response;
 
-import com.example.board.board.entity.Board;
 import com.example.board.comment.dto.response.CommentGetResponse;
 import java.time.LocalDateTime;
 import java.util.List;

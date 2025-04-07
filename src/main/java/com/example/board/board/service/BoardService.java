@@ -11,7 +11,6 @@ import com.example.board.comment.dto.response.CommentGetResponse;
 import com.example.board.comment.entity.Comment;
 import com.example.board.comment.repository.CommentRepository;
 import com.example.board.global.common.SecurityUtil;
-import com.example.board.member.entity.Member;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

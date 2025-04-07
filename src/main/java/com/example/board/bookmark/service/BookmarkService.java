@@ -6,7 +6,6 @@ import com.example.board.board.repository.BoardRepository;
 import com.example.board.bookmark.entity.Bookmark;
 import com.example.board.bookmark.repository.BookmarkRepository;
 import com.example.board.global.common.SecurityUtil;
-import com.example.board.member.entity.Member;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,6 @@
 package com.example.board.member.controller;
 
 import com.example.board.member.dto.request.MemberUpdateNicknameRequest;
-import com.example.board.member.dto.response.MemberCreateResponse;
 import com.example.board.member.dto.response.MemberUpdateResponse;
 import com.example.board.member.service.MemberService;
 import jakarta.validation.Valid;

@@ -5,8 +5,8 @@ import static com.example.board.global.exception.GlobalExceptionCode.NOT_MATCH_P
 
 import com.example.board.auth.dto.response.TokenResponse;
 import com.example.board.global.common.SecurityUtil;
-import com.example.board.global.security.jwt.TokenProvider;
 import com.example.board.global.exception.CustomException;
+import com.example.board.global.security.jwt.TokenProvider;
 import com.example.board.member.dto.request.MemberCreateRequest;
 import com.example.board.member.dto.request.MemberLoginRequest;
 import com.example.board.member.entity.Member;

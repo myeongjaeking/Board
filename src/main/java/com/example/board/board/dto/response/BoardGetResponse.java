@@ -1,9 +1,7 @@
 package com.example.board.board.dto.response;
 
-import com.example.board.board.entity.Board;
-import lombok.Builder;
-
 import java.time.LocalDateTime;
+import lombok.Builder;
 
 @Builder
 public record BoardGetResponse(

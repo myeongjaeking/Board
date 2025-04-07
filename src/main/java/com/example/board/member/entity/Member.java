@@ -1,7 +1,5 @@
 package com.example.board.member.entity;
 
-import static com.example.board.global.exception.GlobalExceptionCode.DUPLICATION_NICKNAME;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

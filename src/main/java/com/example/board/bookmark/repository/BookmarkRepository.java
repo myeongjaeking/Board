@@ -3,7 +3,6 @@ package com.example.board.bookmark.repository;
 import static com.example.board.global.exception.GlobalExceptionCode.NOT_FOUND_BOOKMARK;
 
 import com.example.board.bookmark.entity.Bookmark;
-import com.example.board.member.entity.Member;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

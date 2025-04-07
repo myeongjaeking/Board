@@ -1,15 +1,13 @@
 package com.example.board.board.repository;
 
+import static com.example.board.global.exception.GlobalExceptionCode.NOT_FOUND_BOARD;
+
 import com.example.board.board.entity.Board;
-import com.example.board.global.exception.CustomException;
-import com.example.board.member.entity.Member;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-
-import static com.example.board.global.exception.GlobalExceptionCode.NOT_FOUND_BOARD;
 
 @Repository
 @RequiredArgsConstructor

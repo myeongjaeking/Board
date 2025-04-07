@@ -1,7 +1,6 @@
 package com.example.board.comment.repository;
 
 import com.example.board.comment.entity.Comment;
-import com.example.board.member.entity.Member;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;

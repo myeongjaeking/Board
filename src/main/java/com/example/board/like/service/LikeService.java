@@ -5,7 +5,6 @@ import com.example.board.board.repository.BoardRepository;
 import com.example.board.global.common.SecurityUtil;
 import com.example.board.like.entity.Likes;
 import com.example.board.like.repository.LikeRepository;
-import com.example.board.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
