@@ -33,7 +33,7 @@ public class Likes {
   private Long boardId;
 
   @Builder(builderMethodName = "create")
-  public Likes(Member member, Long boardId){
+  private Likes(Member member, Long boardId){
     this.boardId = boardId;
     this.member = member;
   }

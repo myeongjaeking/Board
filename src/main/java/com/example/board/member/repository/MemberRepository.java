@@ -12,6 +12,10 @@ public class MemberRepository {
 
   private final MemberJpaRepository memberJpaRepository;
 
+  public boolean existsByNickname(String nickname) {
+    return memberJpaRepository.existsByNickname(nickname);
+  }
+
   public Member findByEmail(String email) {
     return memberJpaRepository.findByEmail(email).orElseThrow(NO_AUTHENTICATED::newException);
   }

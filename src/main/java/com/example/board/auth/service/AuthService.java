@@ -1,5 +1,6 @@
 package com.example.board.auth.service;
 
+import static com.example.board.global.exception.GlobalExceptionCode.DUPLICATION_NICKNAME;
 import static com.example.board.global.exception.GlobalExceptionCode.NOT_MATCH_PASSWORD;
 
 import com.example.board.auth.dto.response.TokenResponse;
@@ -37,6 +38,10 @@ public class AuthService {
   }
 
   public Long signup(MemberCreateRequest memberCreateRequest) {
+    if(memberRepository.existsByNickname(memberCreateRequest.nickname())){
+      throw DUPLICATION_NICKNAME.newException();
+    }
+
     Member member = Member.create()
         .email(memberCreateRequest.email())
         .nickname(memberCreateRequest.nickname())

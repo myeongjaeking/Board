@@ -31,7 +31,9 @@ public enum GlobalExceptionCode implements ExceptionCode {
 
     NOT_MATCH_PASSWORD(UNAUTHORIZED.value(), "패스워드가 일치하지 않습니다."),
     NOT_VALID_REFRESH_TOKEN(NOT_FOUND.value(), "리프레시 토큰을 찾을 수 없습니다."),
-    NO_AUTHENTICATED(UNAUTHORIZED.value(), "사용자가 인증되지 않았습니다.");
+    NO_AUTHENTICATED(UNAUTHORIZED.value(), "사용자가 인증되지 않았습니다."),
+
+    DUPLICATION_NICKNAME(BAD_REQUEST.value(),"이미 존재하는 닉네임입니다.");
 
     private final int status;
     private final String message;
