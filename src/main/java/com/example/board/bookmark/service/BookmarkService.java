@@ -67,7 +67,6 @@ public class BookmarkService {
             .content(board.getContent())
             .createTime(board.getCreateTime())
             .viewCount(board.getViewCount())
-            .likeCount(board.getLikeCount())
             .build())
         .collect(Collectors.toList());
   }

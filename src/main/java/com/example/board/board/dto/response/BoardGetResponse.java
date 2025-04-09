@@ -5,12 +5,11 @@ import lombok.Builder;
 
 @Builder
 public record BoardGetResponse(
+    Long id,
     String title,
     String content,
     LocalDateTime createTime,
-    String nickname,
-    int viewCount,
-    int likeCount
+    Integer viewCount
 ) {
 
 }

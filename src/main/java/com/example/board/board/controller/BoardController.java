@@ -7,6 +7,7 @@ import com.example.board.board.dto.response.BoardGetResponse;
 import com.example.board.board.dto.response.BoardPageResponse;
 import com.example.board.board.service.BoardService;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -62,11 +64,13 @@ public class BoardController {
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
 
-  //TODO QueryDSL Study
   @GetMapping("/list")
-  public ResponseEntity<Page<BoardPageResponse>> page(
-      @PageableDefault(page = 0, size = 3, sort = "id", direction = Sort.Direction.DESC) Pageable page) {
-    Page<BoardPageResponse> list = boardService.getList(page);
+  public ResponseEntity<List<BoardGetResponse>> page(
+      @RequestParam(defaultValue = "create_time") String sort,
+      @RequestParam(defaultValue = "desc") String direction,
+      @RequestParam(defaultValue = "0") int page
+  ) {
+    List<BoardGetResponse> list = boardService.getList(sort,direction,page);
 
     return ResponseEntity.status(HttpStatus.OK).body(list);
   }

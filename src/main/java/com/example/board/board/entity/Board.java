@@ -31,7 +31,7 @@ public class Board {
   private String content;
 
   @Column(name = "view_count", nullable = false)
-  private int viewCount;
+  private Integer viewCount;
 
   @Column(name = "like_count", nullable = false)
   private int likeCount;

@@ -2,6 +2,7 @@ package com.example.board.board.repository;
 
 import static com.example.board.global.exception.GlobalExceptionCode.NOT_FOUND_BOARD;
 
+import com.example.board.board.dto.response.BoardGetResponse;
 import com.example.board.board.entity.Board;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,10 @@ public class BoardRepository {
     return board;
   }
 
+  public List<BoardGetResponse> getBoardList(String sort, String direction, int page) {
+    return boardJpaRepository.getBoardList(sort,direction, page);
+  }
+
   public List<Board> findAllById(List<Long> id) {
     return boardJpaRepository.findAllById(id);
   }
@@ -41,10 +46,6 @@ public class BoardRepository {
     Board board = findById(nickname,id);
 
     boardJpaRepository.delete(board);
-  }
-
-  public Page<Board> findAll(Pageable pageable) {
-    return boardJpaRepository.findAll(pageable);
   }
 
 }
