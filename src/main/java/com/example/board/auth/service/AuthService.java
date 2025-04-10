@@ -54,7 +54,7 @@ public class AuthService {
 
   private void validatePassword(Member member, String password) {
     if (!member.getPassword().equals(password)) {
-      throw new CustomException(NOT_MATCH_PASSWORD);
+      throw NOT_MATCH_PASSWORD.newException();
     }
   }
 

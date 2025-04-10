@@ -13,10 +13,10 @@ import org.springframework.stereotype.Repository;
 
 @RequiredArgsConstructor
 @Repository
-public class CustomizedBoardRepositoryImpl implements CustomizedBoardRepository{
+public class CustomizedBoardRepositoryImpl implements CustomizedBoardRepository {
 
   private final JPAQueryFactory jpaQueryFactory;
-  private final int SIZE = 5;
+  private final static int SIZE = 5;
 
   @Override
   public List<BoardGetResponse> getBoardList(
@@ -25,19 +25,19 @@ public class CustomizedBoardRepositoryImpl implements CustomizedBoardRepository{
       int page
   ) {
 
-  QBoard board = QBoard.board;
+    QBoard board = QBoard.board;
 
     return jpaQueryFactory
         .select(
             constructor(BoardGetResponse.class,
-            board.id,
-            board.title,
-            board.content,
-            board.createTime,
-            board.viewCount))
+                board.id,
+                board.title,
+                board.content,
+                board.createTime,
+                board.viewCount))
         .from(board)
         .orderBy(createOrderSpecifier(sort, direction))
-        .offset(page *SIZE)
+        .offset((long) page * SIZE)
         .limit(SIZE)
         .fetch();
   }
