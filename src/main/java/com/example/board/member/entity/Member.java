@@ -1,5 +1,7 @@
 package com.example.board.member.entity;
 
+import static com.example.board.global.exception.GlobalExceptionCode.NOT_MATCH_PASSWORD;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -60,6 +62,12 @@ public class Member {
 
   public void updateNickname(String nickname) {
     this.nickname = nickname;
+  }
+
+  public void validatePassword(String password) {
+    if (!this.password.equals(password)) {
+      throw NOT_MATCH_PASSWORD.newException();
+    }
   }
 
 }

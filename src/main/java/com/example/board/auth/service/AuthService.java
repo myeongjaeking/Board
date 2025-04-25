@@ -23,7 +23,7 @@ public class AuthService {
 
   public TokenResponse login(MemberLoginRequest memberLoginRequest) {
     Member member = memberRepository.findByEmail(memberLoginRequest.email());
-    validatePassword(member, memberLoginRequest.password());
+    member.validatePassword(memberLoginRequest.password());
 
     String accessToken = tokenProvider.generateAccessToken(member, Duration.ofHours(2));
     String refreshToken = tokenProvider.generateRefreshToken(member, Duration.ofDays(14));
@@ -47,12 +47,6 @@ public class AuthService {
 
     memberRepository.save(member);
     return member.getId();
-  }
-
-  private void validatePassword(Member member, String password) {
-    if (!member.getPassword().equals(password)) {
-      throw NOT_MATCH_PASSWORD.newException();
-    }
   }
 
   private void saveRefreshToken(Long memberId, String refreshToken) {
