@@ -26,7 +26,7 @@ public class TokenService {
     String nickname = SecurityUtil.getNickname();
     Member member = memberRepository.findByNickname(nickname);
 
-    return tokenProvider.generateToken(member, Duration.ofHours(2));
+    return tokenProvider.generateAccessToken(member, Duration.ofHours(2));
   }
 
 }

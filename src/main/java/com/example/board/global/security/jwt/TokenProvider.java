@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -24,13 +25,19 @@ public class TokenProvider {
 
   private final JwtProperties jwtProperties;
 
-  public String generateToken(Member member, Duration duration) {
+  public String generateAccessToken(Member member, Duration duration) {
     Date now = new Date();
 
-    return makeToken(new Date(now.getTime() + duration.toMillis()), member);
+    return makeAccessToken(new Date(now.getTime() + duration.toMillis()), member);
   }
 
-  private String makeToken(Date expiry, Member member) {
+  public String generateRefreshToken(Member member, Duration duration) {
+    Date now = new Date();
+
+    return makeRefreshToken(new Date(now.getTime() + duration.toMillis()), member);
+  }
+
+  private String makeAccessToken(Date expiry, Member member) {
     Date now = new Date();
 
     return Jwts.builder()
@@ -40,6 +47,19 @@ public class TokenProvider {
         .setExpiration(expiry)
         .setSubject(member.getEmail())
         .claim("id", member.getId())
+        .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+        .compact();
+  }
+
+  private String makeRefreshToken(Date expiry, Member member) {
+    Date now = new Date();
+
+    return Jwts.builder()
+        .setHeaderParam("typ", "JWT")
+        .setIssuer(jwtProperties.getIssuer())
+        .setIssuedAt(now)
+        .setExpiration(expiry)
+        .setSubject(member.getEmail())
         .signWith(getSigningKey(), SignatureAlgorithm.HS256)
         .compact();
   }
@@ -72,7 +92,7 @@ public class TokenProvider {
         new SimpleGrantedAuthority(Role.MEMBER.getValue()));
 
     return new UsernamePasswordAuthenticationToken(
-        new org.springframework.security.core.userdetails.User(claims.getSubject(), "",
+        new User(claims.getSubject(), "",
             authorities),
         token,
         authorities

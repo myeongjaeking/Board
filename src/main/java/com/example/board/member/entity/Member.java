@@ -51,7 +51,7 @@ public class Member {
       String email,
       String password,
       String nickname) {
-    return new Member(email, password, nickname)
+    return new Member(email, password, nickname);
   }
 
   public void updateRefreshToken(String refreshToken) {

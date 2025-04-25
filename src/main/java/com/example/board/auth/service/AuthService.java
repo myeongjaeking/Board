@@ -25,8 +25,8 @@ public class AuthService {
     Member member = memberRepository.findByEmail(memberLoginRequest.email());
     validatePassword(member, memberLoginRequest.password());
 
-    String accessToken = tokenProvider.generateToken(member, Duration.ofHours(2));
-    String refreshToken = tokenProvider.generateToken(member, Duration.ofDays(14));
+    String accessToken = tokenProvider.generateAccessToken(member, Duration.ofHours(2));
+    String refreshToken = tokenProvider.generateRefreshToken(member, Duration.ofDays(14));
 
     saveRefreshToken(member.getId(), refreshToken);
 
@@ -37,15 +37,13 @@ public class AuthService {
   }
 
   public Long signup(MemberCreateRequest memberCreateRequest) {
-    if(memberRepository.existsByNickname(memberCreateRequest.nickname())){
+    if (memberRepository.existsByNickname(memberCreateRequest.nickname())) {
       throw DUPLICATION_NICKNAME.newException();
     }
 
-    Member member = Member.create()
-        .email(memberCreateRequest.email())
-        .nickname(memberCreateRequest.nickname())
-        .password(memberCreateRequest.password())
-        .build();
+    Member member = Member.create(memberCreateRequest.email(),
+        memberCreateRequest.nickname(),
+        memberCreateRequest.password());
 
     memberRepository.save(member);
     return member.getId();
