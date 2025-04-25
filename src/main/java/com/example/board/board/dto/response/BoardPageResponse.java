@@ -10,5 +10,4 @@ public record BoardPageResponse(
     LocalDateTime createTime,
     int viewCount
 ) {
-
 }

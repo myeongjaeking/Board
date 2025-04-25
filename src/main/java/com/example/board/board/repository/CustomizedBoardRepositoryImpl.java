@@ -1,5 +1,6 @@
 package com.example.board.board.repository;
 
+import static com.example.board.board.entity.QBoard.board;
 import static com.querydsl.core.types.Projections.constructor;
 
 import com.example.board.board.dto.response.BoardGetResponse;
@@ -24,9 +25,6 @@ public class CustomizedBoardRepositoryImpl implements CustomizedBoardRepository 
       String direction,
       int page
   ) {
-
-    QBoard board = QBoard.board;
-
     return jpaQueryFactory
         .select(
             constructor(BoardGetResponse.class,

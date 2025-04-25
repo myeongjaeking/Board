@@ -38,10 +38,7 @@ public class BookmarkService {
   private void register(Long boardId) {
     String nickname = SecurityUtil.getNickname();
 
-    Bookmark bookmark = Bookmark.create()
-        .boardId(boardId)
-        .nickname(nickname)
-        .build();
+    Bookmark bookmark = Bookmark.create(nickname,boardId);
 
     bookmarkRepository.save(bookmark);
   }

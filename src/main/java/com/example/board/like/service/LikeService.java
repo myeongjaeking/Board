@@ -36,10 +36,7 @@ public class LikeService {
   protected void create(Long boardId) {
     String nickname = SecurityUtil.getNickname();
 
-    Likes likes = Likes.create()
-        .boardId(boardId)
-        .nickname(nickname)
-        .build();
+    Likes likes = Likes.create(nickname,boardId);
 
     likeRepository.save(likes);
 

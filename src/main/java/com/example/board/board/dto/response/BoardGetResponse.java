@@ -9,7 +9,7 @@ public record BoardGetResponse(
     String title,
     String content,
     LocalDateTime createTime,
-    Integer viewCount
+    int viewCount
 ) {
 
 }

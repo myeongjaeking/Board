@@ -1,13 +1,13 @@
 package com.example.board.auth.dto.request;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
-@NoArgsConstructor
-public class CreateAccessTokenRequest {
 
-  private String refreshToken;
+public record CreateAccessTokenRequest(
+    @NotBlank(message = "RefreshToken 이 비어있습니다.")
+    String refreshToken
+) {
 
 }

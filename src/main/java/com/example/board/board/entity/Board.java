@@ -31,7 +31,7 @@ public class Board {
   private String content;
 
   @Column(name = "view_count", nullable = false)
-  private Integer viewCount;
+  private int viewCount;
 
   @Column(name = "like_count", nullable = false)
   private int likeCount;
@@ -50,6 +50,10 @@ public class Board {
     this.nickname = nickname;
     this.viewCount = 0;
     this.likeCount = 0;
+  }
+
+  public static Board create(String title, String content, String nickname) {
+    return new Board(title,content,nickname);
   }
 
   public void incrementViewCount() {

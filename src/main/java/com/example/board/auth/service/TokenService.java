@@ -19,9 +19,10 @@ public class TokenService {
   private final MemberRepository memberRepository;
 
   public String createNewAccessToken(CreateAccessTokenRequest createAccessTokenRequest) {
-    if (!tokenProvider.validToken(createAccessTokenRequest.getRefreshToken())) {
+    if (!tokenProvider.validToken(createAccessTokenRequest.refreshToken())) {
       throw NOT_VALID_REFRESH_TOKEN.newException();
     }
+
     String nickname = SecurityUtil.getNickname();
     Member member = memberRepository.findByNickname(nickname);
 

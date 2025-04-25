@@ -23,7 +23,7 @@ public class Bookmark {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "nickname",nullable = false)
+  @Column(name = "nickname", nullable = false)
   private String nickname;
 
   @Column(name = "board_id", nullable = false)
@@ -35,8 +35,12 @@ public class Bookmark {
     this.nickname = nickname;
   }
 
-  public void validateAccess(String nickname){
-    if(this.nickname.equals(nickname)){
+  public static Bookmark create(String nickname, Long boardId) {
+    return new Bookmark(nickname, boardId);
+  }
+
+  public void validateAccess(String nickname) {
+    if (this.nickname.equals(nickname)) {
       throw FORBIDDEN_ACCESS_BOOKMARK.newException();
     }
   }

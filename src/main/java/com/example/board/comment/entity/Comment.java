@@ -26,7 +26,7 @@ public class Comment {
   @Column(name = "content", nullable = false)
   private String content;
 
-  @Column(name = "nickname",nullable = false)
+  @Column(name = "nickname", nullable = false)
   private String nickname;
 
   @Column(name = "board_id", nullable = false)
@@ -39,12 +39,19 @@ public class Comment {
     this.boardId = boardId;
   }
 
+  public static Comment create(String content,
+      String nickname,
+      Long boardId
+  ) {
+    return new Comment(content, nickname, boardId);
+  }
+
   public void updateContent(String content) {
     this.content = content;
   }
 
   public void validateAccess(String nickname) {
-    if(this.nickname.equals(nickname)) {
+    if (this.nickname.equals(nickname)) {
       throw FORBIDDEN_ACCESS_COMMENT.newException();
     }
   }

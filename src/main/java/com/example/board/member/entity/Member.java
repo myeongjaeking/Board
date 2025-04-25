@@ -23,7 +23,7 @@ public class Member {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "nickname",nullable = false)
+  @Column(name = "nickname", nullable = false)
   private String nickname;
 
   @Column(name = "email", nullable = false)
@@ -36,15 +36,22 @@ public class Member {
   private String refreshToken;
 
   @Enumerated(EnumType.STRING)
-  @Column(name = "role",nullable = false)
+  @Column(name = "role", nullable = false)
   private Role role;
 
   @Builder(builderMethodName = "create")
-  private Member(String email, String password, String nickname){
+  private Member(String email, String password, String nickname) {
     this.email = email;
     this.password = password;
     this.nickname = nickname;
     this.role = Role.MEMBER;
+  }
+
+  public static Member create(
+      String email,
+      String password,
+      String nickname) {
+    return new Member(email, password, nickname)
   }
 
   public void updateRefreshToken(String refreshToken) {

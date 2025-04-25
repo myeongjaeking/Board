@@ -31,11 +31,10 @@ public class BoardService {
   public BoardGetResponse create(BoardCreateRequest boardCreateRequest) {
     String nickname = SecurityUtil.getNickname();
 
-    Board board = Board.create()
-        .title(boardCreateRequest.title())
-        .content(boardCreateRequest.content())
-        .nickname(nickname)
-        .build();
+    Board board = Board.create(boardCreateRequest.title(),
+        boardCreateRequest.content(),
+        nickname);
+
     boardRepository.save(board);
 
     return BoardGetResponse.builder()

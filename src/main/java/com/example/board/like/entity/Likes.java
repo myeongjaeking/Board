@@ -21,16 +21,20 @@ public class Likes {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "nickname",nullable = false)
+  @Column(name = "nickname", nullable = false)
   private String nickname;
 
-  @Column(name = "board_id",nullable = false)
+  @Column(name = "board_id", nullable = false)
   private Long boardId;
 
   @Builder(builderMethodName = "create")
-  private Likes(String nickname, Long boardId){
+  private Likes(String nickname, Long boardId) {
     this.boardId = boardId;
     this.nickname = nickname;
+  }
+
+  public static Likes create(String nickname, Long boardId) {
+    return new Likes(nickname, boardId);
   }
 
 }

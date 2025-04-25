@@ -20,11 +20,10 @@ public class MemberService {
   private final MemberRepository memberRepository;
 
   public MemberCreateResponse save(MemberCreateRequest memberCreateRequest) {
-    Member member = Member.create()
-        .email(memberCreateRequest.email())
-        .nickname(memberCreateRequest.nickname())
-        .password(memberCreateRequest.password())
-        .build();
+    Member member = Member.create(
+        memberCreateRequest.email(),
+        memberCreateRequest.nickname(),
+        memberCreateRequest.password());
 
     Long memberId = memberRepository.save(member);
 
@@ -38,7 +37,7 @@ public class MemberService {
     String nickname = SecurityUtil.getNickname();
     Member member = memberRepository.findByNickname(nickname);
 
-    if(memberRepository.existsByNickname(request.nickname())){
+    if (memberRepository.existsByNickname(request.nickname())) {
       throw DUPLICATION_NICKNAME.newException();
     }
 

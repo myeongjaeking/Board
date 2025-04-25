@@ -20,11 +20,9 @@ public class CommentService {
   public CommentGetResponse create(Long boardId, CommentCreateRequest commentCreateRequest) {
     String nickname = SecurityUtil.getNickname();
 
-    Comment comment = Comment.create()
-        .boardId(boardId)
-        .content(commentCreateRequest.content())
-        .nickname(nickname)
-        .build();
+    Comment comment = Comment.create(commentCreateRequest.content(),
+        nickname,
+        boardId);
 
     commentRepository.save(comment);
 

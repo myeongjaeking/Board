@@ -40,7 +40,7 @@ public class AuthController {
 
   @PostMapping("/refresh")
   public ResponseEntity<String> createNewAccessToken(
-      @RequestBody CreateAccessTokenRequest request) {
+      @Valid @RequestBody CreateAccessTokenRequest request) {
     String newAccessToken = tokenService.createNewAccessToken(request);
 
     return ResponseEntity.status(HttpStatus.CREATED)
