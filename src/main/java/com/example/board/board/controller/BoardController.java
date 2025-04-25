@@ -27,9 +27,10 @@ public class BoardController {
 
   private final BoardService boardService;
 
-  @PostMapping("/create")
+  @PostMapping("")
   public ResponseEntity<BoardGetResponse> create(
-      @Valid @RequestBody BoardCreateRequest boardCreateRequest) {
+      @Valid @RequestBody BoardCreateRequest boardCreateRequest
+  ) {
     BoardGetResponse boardGetResponse = boardService.create(boardCreateRequest);
 
     return ResponseEntity.status(HttpStatus.CREATED).body(boardGetResponse);
@@ -61,11 +62,12 @@ public class BoardController {
 
   @GetMapping("/list")
   public ResponseEntity<List<BoardGetResponse>> page(
-      @RequestParam(defaultValue = "create_time") String sort,
-      @RequestParam(defaultValue = "desc") String direction,
-      @RequestParam(defaultValue = "0") int page
+      @RequestParam(defaultValue = "1")Long boardId,
+      @RequestParam(defaultValue = "create_time", required = false) String sort,
+      @RequestParam(defaultValue = "desc", required = false) String direction,
+      @RequestParam(defaultValue = "5") int pageSize
   ) {
-    List<BoardGetResponse> list = boardService.getList(sort,direction,page);
+    List<BoardGetResponse> list = boardService.getList(boardId,sort, direction, pageSize);
 
     return ResponseEntity.status(HttpStatus.OK).body(list);
   }

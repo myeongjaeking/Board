@@ -5,6 +5,10 @@ import java.util.List;
 
 public interface CustomizedBoardRepository {
 
-  List<BoardGetResponse> getBoardList(String sort, String direction, int page);
-
+  List<BoardGetResponse> getBoardList(
+      Long boardId,
+      String sort,
+      String direction,
+      int pageSize
+  );
 }

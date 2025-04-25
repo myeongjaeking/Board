@@ -100,8 +100,13 @@ public class BoardService {
   }
 
   @Transactional(readOnly = true)
-  public List<BoardGetResponse> getList(String sort, String direction,int page) {
-    return boardRepository.getBoardList(sort,direction,page);
+  public List<BoardGetResponse> getList(
+      Long boardId,
+      String sort,
+      String direction,
+      int pageSize
+  ) {
+    return boardRepository.getBoardList(boardId, sort, direction, pageSize);
   }
 
 }

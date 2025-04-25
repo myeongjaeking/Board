@@ -64,6 +64,7 @@ public class Member {
     this.nickname = nickname;
   }
 
+
   public void validatePassword(String password) {
     if (!this.password.equals(password)) {
       throw NOT_MATCH_PASSWORD.newException();

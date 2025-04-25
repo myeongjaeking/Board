@@ -5,6 +5,7 @@ import static com.querydsl.core.types.Projections.constructor;
 
 import com.example.board.board.dto.response.BoardGetResponse;
 import com.example.board.board.entity.QBoard;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -17,14 +18,20 @@ import org.springframework.stereotype.Repository;
 public class CustomizedBoardRepositoryImpl implements CustomizedBoardRepository {
 
   private final JPAQueryFactory jpaQueryFactory;
-  private final static int SIZE = 5;
 
   @Override
   public List<BoardGetResponse> getBoardList(
+      Long boardId,
       String sort,
       String direction,
-      int page
+      int pageSize
   ) {
+    BooleanBuilder dynamicLtId = new BooleanBuilder();
+
+    if(boardId != null) {
+      dynamicLtId.and(board.id.lt(boardId));
+    }
+
     return jpaQueryFactory
         .select(
             constructor(BoardGetResponse.class,
@@ -34,9 +41,9 @@ public class CustomizedBoardRepositoryImpl implements CustomizedBoardRepository 
                 board.createTime,
                 board.viewCount))
         .from(board)
+        .where(dynamicLtId)
         .orderBy(createOrderSpecifier(sort, direction))
-        .offset((long) page * SIZE)
-        .limit(SIZE)
+        .limit(pageSize)
         .fetch();
   }
 

@@ -34,16 +34,21 @@ public class BoardRepository {
     return board;
   }
 
-  public List<BoardGetResponse> getBoardList(String sort, String direction, int page) {
-    return boardJpaRepository.getBoardList(sort,direction, page);
+  public List<BoardGetResponse> getBoardList(
+      Long boardId,
+      String sort,
+      String direction,
+      int pageSize
+  ) {
+    return boardJpaRepository.getBoardList(boardId, sort, direction, pageSize);
   }
 
   public List<Board> findAllById(List<Long> id) {
     return boardJpaRepository.findAllById(id);
   }
 
-  public void delete(String nickname,Long id) {
-    Board board = findById(nickname,id);
+  public void delete(String nickname, Long id) {
+    Board board = findById(nickname, id);
 
     boardJpaRepository.delete(board);
   }
