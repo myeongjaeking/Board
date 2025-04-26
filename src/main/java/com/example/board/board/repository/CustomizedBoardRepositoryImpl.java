@@ -1,10 +1,12 @@
 package com.example.board.board.repository;
 
 import static com.example.board.board.entity.QBoard.board;
+import static com.example.board.board.entity.Sort.TITLE;
 import static com.querydsl.core.types.Projections.constructor;
 
 import com.example.board.board.dto.response.BoardGetResponse;
 import com.example.board.board.entity.QBoard;
+import com.example.board.board.entity.Sort;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
@@ -28,7 +30,7 @@ public class CustomizedBoardRepositoryImpl implements CustomizedBoardRepository 
   ) {
     BooleanBuilder dynamicLtId = new BooleanBuilder();
 
-    if(boardId != null) {
+    if (boardId != null) {
       dynamicLtId.and(board.id.lt(boardId));
     }
 
@@ -52,19 +54,9 @@ public class CustomizedBoardRepositoryImpl implements CustomizedBoardRepository 
       String direction
   ) {
     Order order = parseOrderDirection(direction);
-    QBoard board = QBoard.board;
+    Sort sortEnum = Sort.from(sort);
 
-    if (sort == null) {
-      return new OrderSpecifier<>(Order.DESC, board.createTime);
-    }
-    //TODO 열거형으로 빼기
-    return switch (sort.toLowerCase()) {
-      case "title" -> new OrderSpecifier<>(order, board.title);
-      case "view_count" -> new OrderSpecifier<>(order, board.viewCount);
-      case "board_id" -> new OrderSpecifier<>(order, board.id);
-      case "create_time" -> new OrderSpecifier<>(order, board.createTime);
-      default -> new OrderSpecifier<>(Order.DESC, board.createTime);
-    };
+    return sortEnum.getOrderSpecifier(order);
   }
 
   private Order parseOrderDirection(String direction) {
