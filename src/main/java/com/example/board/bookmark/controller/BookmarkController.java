@@ -21,9 +21,9 @@ public class BookmarkController {
 
   @PostMapping("/{id}/bookmark")
   public ResponseEntity<?> register(@PathVariable("id") Long id) {
-    bookmarkService.doRegister(id);
+    Long bookmarkId = bookmarkService.doRegister(id);
 
-    return ResponseEntity.status(HttpStatus.CREATED).body(1);
+    return ResponseEntity.status(HttpStatus.CREATED).body(bookmarkId);
   }
 
   @GetMapping("/{id}/bookmark")

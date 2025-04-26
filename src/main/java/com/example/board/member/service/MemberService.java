@@ -8,7 +8,6 @@ import com.example.board.member.dto.request.MemberUpdateNicknameRequest;
 import com.example.board.member.dto.response.MemberCreateResponse;
 import com.example.board.member.dto.response.MemberUpdateResponse;
 import com.example.board.member.entity.Member;
-import com.example.board.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

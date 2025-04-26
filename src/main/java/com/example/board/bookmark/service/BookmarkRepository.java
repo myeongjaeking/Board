@@ -1,8 +1,9 @@
-package com.example.board.bookmark.repository;
+package com.example.board.bookmark.service;
 
 import static com.example.board.global.exception.GlobalExceptionCode.NOT_FOUND_BOOKMARK;
 
 import com.example.board.bookmark.entity.Bookmark;
+import com.example.board.bookmark.repository.BookmarkJpaRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

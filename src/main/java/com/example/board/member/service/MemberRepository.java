@@ -1,8 +1,9 @@
-package com.example.board.member.repository;
+package com.example.board.member.service;
 
 import static com.example.board.global.exception.GlobalExceptionCode.NO_AUTHENTICATED;
 
 import com.example.board.member.entity.Member;
+import com.example.board.member.repository.MemberJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

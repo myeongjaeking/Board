@@ -1,9 +1,10 @@
-package com.example.board.board.repository;
+package com.example.board.board.service;
 
 import static com.example.board.global.exception.GlobalExceptionCode.NOT_FOUND_BOARD;
 
 import com.example.board.board.dto.response.BoardGetResponse;
 import com.example.board.board.entity.Board;
+import com.example.board.board.repository.BoardJpaRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

@@ -2,12 +2,10 @@ package com.example.board.bookmark.service;
 
 import com.example.board.board.dto.response.BoardGetResponse;
 import com.example.board.board.entity.Board;
-import com.example.board.board.repository.BoardRepository;
+import com.example.board.board.service.BoardRepository;
 import com.example.board.bookmark.entity.Bookmark;
-import com.example.board.bookmark.repository.BookmarkRepository;
 import com.example.board.global.common.SecurityUtil;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,12 +18,11 @@ public class BookmarkService {
   private final BoardRepository boardRepository;
 
   @Transactional
-  public void doRegister(Long boardId) {
+  public Long doRegister(Long boardId) {
     if (isRegister(boardId)) {
-      delete(boardId);
-      return;
+      return delete(boardId);
     }
-    register(boardId);
+    return register(boardId);
   }
 
   @Transactional(readOnly = true)
@@ -35,19 +32,22 @@ public class BookmarkService {
     return bookmarkRepository.existsByBoardIdAndNickname(boardId, nickname);
   }
 
-  private void register(Long boardId) {
+  private Long register(Long boardId) {
     String nickname = SecurityUtil.getNickname();
 
     Bookmark bookmark = Bookmark.create(nickname,boardId);
 
     bookmarkRepository.save(bookmark);
+
+    return bookmark.getBoardId();
   }
 
   @Transactional
-  public void delete(Long boardId) {
+  public Long delete(Long boardId) {
     String nickname = SecurityUtil.getNickname();
 
     bookmarkRepository.delete(boardId, nickname);
+    return boardId;
   }
 
   @Transactional(readOnly = true)
@@ -65,7 +65,7 @@ public class BookmarkService {
             .createTime(board.getCreateTime())
             .viewCount(board.getViewCount())
             .build())
-        .collect(Collectors.toList());
+        .toList();
   }
 
 }

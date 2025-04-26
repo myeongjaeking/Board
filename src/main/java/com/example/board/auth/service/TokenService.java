@@ -6,7 +6,7 @@ import com.example.board.auth.dto.request.CreateAccessTokenRequest;
 import com.example.board.global.common.SecurityUtil;
 import com.example.board.global.security.jwt.TokenProvider;
 import com.example.board.member.entity.Member;
-import com.example.board.member.repository.MemberRepository;
+import com.example.board.member.service.MemberRepository;
 import java.time.Duration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

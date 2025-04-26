@@ -8,7 +8,7 @@ import com.example.board.global.security.jwt.TokenProvider;
 import com.example.board.member.dto.request.MemberCreateRequest;
 import com.example.board.member.dto.request.MemberLoginRequest;
 import com.example.board.member.entity.Member;
-import com.example.board.member.repository.MemberRepository;
+import com.example.board.member.service.MemberRepository;
 import java.time.Duration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

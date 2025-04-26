@@ -1,7 +1,7 @@
 package com.example.board.global.security;
 
 import com.example.board.member.entity.Member;
-import com.example.board.member.repository.MemberRepository;
+import com.example.board.member.service.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

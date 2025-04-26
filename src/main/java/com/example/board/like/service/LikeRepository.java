@@ -1,6 +1,7 @@
-package com.example.board.like.repository;
+package com.example.board.like.service;
 
 import com.example.board.like.entity.Likes;
+import com.example.board.like.repository.LikeJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
