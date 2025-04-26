@@ -26,7 +26,7 @@ public class BookmarkController {
   public ResponseEntity<?> register(@PathVariable("id") Long id) {
     bookmarkLockService.bookmarkBoardLock(id);
 
-    return ResponseEntity.noContent().build();
+    return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
 
   @GetMapping("/{id}/bookmark")

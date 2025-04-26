@@ -24,7 +24,7 @@ public class LikeController {
   public ResponseEntity<?> like(@PathVariable("id") Long id) {
     likeLockService.likeBoardLock(id);
 
-    return ResponseEntity.noContent().build();
+    return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
 
   @GetMapping("{id}/like")
