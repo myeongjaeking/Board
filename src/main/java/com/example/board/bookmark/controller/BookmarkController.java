@@ -1,7 +1,9 @@
 package com.example.board.bookmark.controller;
 
 import com.example.board.board.dto.response.BoardGetResponse;
+import com.example.board.bookmark.service.BookmarkLockService;
 import com.example.board.bookmark.service.BookmarkService;
+import com.example.board.global.common.SecurityUtil;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,17 +20,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookmarkController {
 
   private final BookmarkService bookmarkService;
+  private final BookmarkLockService bookmarkLockService;
 
   @PostMapping("/{id}/bookmark")
   public ResponseEntity<?> register(@PathVariable("id") Long id) {
-    Long bookmarkId = bookmarkService.doRegister(id);
+    bookmarkLockService.bookmarkBoardLock(id);
 
-    return ResponseEntity.status(HttpStatus.CREATED).body(bookmarkId);
+    return ResponseEntity.noContent().build();
   }
 
   @GetMapping("/{id}/bookmark")
   public ResponseEntity<Boolean> getRegister(@PathVariable("id") Long id) {
-    boolean isRegister = bookmarkService.isRegister(id);
+    String nickname = SecurityUtil.getNickname();
+    boolean isRegister = bookmarkService.isRegister(nickname, id);
 
     return ResponseEntity.status(HttpStatus.OK).body(isRegister);
   }

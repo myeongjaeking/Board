@@ -18,36 +18,27 @@ public class BookmarkService {
   private final BoardRepository boardRepository;
 
   @Transactional
-  public Long doRegister(Long boardId) {
-    if (isRegister(boardId)) {
-      return delete(boardId);
+  public void doRegister(String nickname,Long boardId) {
+    if (isRegister(nickname,boardId)) {
+      delete(nickname, boardId);
+      return;
     }
-    return register(boardId);
+    register(nickname, boardId);
   }
 
   @Transactional(readOnly = true)
-  public boolean isRegister(Long boardId) {
-    String nickname = SecurityUtil.getNickname();
-
+  public boolean isRegister(String nickname,Long boardId) {
     return bookmarkRepository.existsByBoardIdAndNickname(boardId, nickname);
   }
 
-  private Long register(Long boardId) {
-    String nickname = SecurityUtil.getNickname();
-
+  private void register(String nickname,Long boardId) {
     Bookmark bookmark = Bookmark.create(nickname,boardId);
-
     bookmarkRepository.save(bookmark);
-
-    return bookmark.getBoardId();
   }
 
   @Transactional
-  public Long delete(Long boardId) {
-    String nickname = SecurityUtil.getNickname();
-
+  public void delete(String nickname,Long boardId) {
     bookmarkRepository.delete(boardId, nickname);
-    return boardId;
   }
 
   @Transactional(readOnly = true)

@@ -16,40 +16,33 @@ public class LikeService {
   private final BoardRepository boardRepository;
 
   @Transactional
-  public void doLike(Long boardId) {
-    if (isLike(boardId)) {
-      delete(boardId);
+  public void doLike(String nickname, Long boardId) {
+    Board board = boardRepository.findById(boardId);
+    if (isLike(nickname, boardId)) {
+      delete(nickname, board);
       return;
     }
-    create(boardId);
+
+    create(nickname, board);
   }
 
   @Transactional(readOnly = true)
-  public boolean isLike(Long boardId) {
-    String nickname = SecurityUtil.getNickname();
-
-    return likeRepository.existsByBoardIdAndNickname(boardId,nickname);
+  public boolean isLike(String nickname, Long boardId) {
+    return likeRepository.existsByBoardIdAndNickname(boardId, nickname);
   }
 
   @Transactional
-  protected void create(Long boardId) {
-    String nickname = SecurityUtil.getNickname();
-
-    Likes likes = Likes.create(nickname,boardId);
+  protected void create(String nickname, Board board) {
+    Likes likes = Likes.create(nickname, board.getId());
 
     likeRepository.save(likes);
-
-    Board board = boardRepository.findById(boardId);
     board.incrementLikeCount();
   }
 
   @Transactional
-  protected void delete(Long boardId) {
-    String nickname = SecurityUtil.getNickname();
+  protected void delete(String nickname, Board board) {
+    likeRepository.delete(board.getId(), nickname);
 
-    likeRepository.delete(boardId, nickname);
-
-    Board board = boardRepository.findById(boardId);
     board.decrementLikeCount();
   }
 

@@ -16,7 +16,7 @@ public class LikeRepository {
   }
 
   public void delete(Long boardId, String nickname) {
-    Likes likes = findByBoardIdAndNickname(boardId,nickname);
+    Likes likes = findByBoardIdAndNickname(boardId, nickname);
     likeJpaRepository.delete(likes);
   }
 

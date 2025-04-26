@@ -1,5 +1,7 @@
 package com.example.board.like.controller;
 
+import com.example.board.global.common.SecurityUtil;
+import com.example.board.like.service.LikeLockService;
 import com.example.board.like.service.LikeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,17 +18,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class LikeController {
 
   private final LikeService likeService;
+  private final LikeLockService likeLockService;
 
   @PostMapping("/{id}/like")
   public ResponseEntity<?> like(@PathVariable("id") Long id) {
-    likeService.doLike(id);
+    likeLockService.likeBoardLock(id);
 
-    return ResponseEntity.status(HttpStatus.CREATED).body(1L);
+    return ResponseEntity.noContent().build();
   }
 
   @GetMapping("{id}/like")
   public ResponseEntity<?> getLike(@PathVariable("id") Long id) {
-    boolean isLike = likeService.isLike(id);
+    String nickname = SecurityUtil.getNickname();
+    boolean isLike = likeService.isLike(nickname, id);
 
     return ResponseEntity.status(HttpStatus.OK).body(isLike);
   }

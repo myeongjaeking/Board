@@ -48,7 +48,8 @@ public class CommentController {
       @PathVariable("id") Long id,
       @Valid @RequestBody CommentUpdateRequest commentUpdateRequest
   ) {
-    CommentGetResponse commentGetResponse = commentService.update(boardId,id,commentUpdateRequest);
+    CommentGetResponse commentGetResponse = commentService.update(boardId, id,
+        commentUpdateRequest);
 
     return ResponseEntity.status(HttpStatus.OK).body(commentGetResponse);
   }
@@ -58,7 +59,7 @@ public class CommentController {
       @PathVariable("boardId") Long boardId,
       @PathVariable("id") Long id
   ) {
-    commentService.delete(boardId,id);
+    commentService.delete(boardId, id);
 
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
