@@ -1,7 +1,6 @@
 package com.example.board.bookmark.controller;
 
 import com.example.board.board.dto.response.BoardGetResponse;
-import com.example.board.bookmark.service.BookmarkLockService;
 import com.example.board.bookmark.service.BookmarkService;
 import com.example.board.global.common.SecurityUtil;
 import java.util.List;
@@ -20,11 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookmarkController {
 
   private final BookmarkService bookmarkService;
-  private final BookmarkLockService bookmarkLockService;
+
 
   @PostMapping("/{id}/bookmark")
   public ResponseEntity<?> register(@PathVariable("id") Long id) {
-    bookmarkLockService.bookmarkBoardLock(id);
+    String nickname = SecurityUtil.getNickname();
+    bookmarkService.doRegister(nickname, id);
 
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }

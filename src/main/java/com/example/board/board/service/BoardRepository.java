@@ -54,4 +54,8 @@ public class BoardRepository {
     boardJpaRepository.delete(board);
   }
 
+  public Board findWithPessimisticWriteById(Long boardId) {
+    return boardJpaRepository.findWithPessimisticWriteById(boardId);
+  }
+
 }

@@ -17,7 +17,7 @@ public class LikeService {
 
   @Transactional
   public void doLike(String nickname, Long boardId) {
-    Board board = boardRepository.findById(boardId);
+    Board board = boardRepository.findWithPessimisticWriteById(boardId);
     if (isLike(nickname, boardId)) {
       delete(nickname, board);
       return;
