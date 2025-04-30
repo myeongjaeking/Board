@@ -11,4 +11,5 @@ public record BoardGetResponse(
     LocalDateTime createTime,
     int viewCount
 ) {
+
 }

@@ -8,4 +8,5 @@ public record BoardUpdateRequest(
     @NotBlank(message = "본문을 입력하세요.")
     String content
 ) {
+
 }

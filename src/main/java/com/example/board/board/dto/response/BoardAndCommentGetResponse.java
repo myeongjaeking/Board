@@ -15,4 +15,5 @@ public record BoardAndCommentGetResponse(
     int likeCount,
     List<CommentGetResponse> commentList
 ) {
+
 }

@@ -62,12 +62,12 @@ public class BoardController {
 
   @GetMapping("/list")
   public ResponseEntity<List<BoardGetResponse>> page(
-      @RequestParam(defaultValue = "1")Long boardId,
+      @RequestParam(defaultValue = "1") Long boardId,
       @RequestParam(defaultValue = "create_time", required = false) String sort,
       @RequestParam(defaultValue = "desc", required = false) String direction,
       @RequestParam(defaultValue = "5") int pageSize
   ) {
-    List<BoardGetResponse> list = boardService.getList(boardId,sort, direction, pageSize);
+    List<BoardGetResponse> list = boardService.getList(boardId, sort, direction, pageSize);
 
     return ResponseEntity.status(HttpStatus.OK).body(list);
   }

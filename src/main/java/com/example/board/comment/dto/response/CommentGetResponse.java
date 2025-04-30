@@ -8,5 +8,4 @@ public record CommentGetResponse(
     String nickname,
     Long boardId
 ) {
-
 }

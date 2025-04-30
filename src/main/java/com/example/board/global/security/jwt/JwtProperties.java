@@ -14,5 +14,4 @@ public class JwtProperties {
   private String issuer;
   private String secretKey;
 
-
 }

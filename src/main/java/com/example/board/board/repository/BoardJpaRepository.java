@@ -12,4 +12,5 @@ public interface BoardJpaRepository extends JpaRepository<Board, Long>, Customiz
   @Lock(LockModeType.PESSIMISTIC_WRITE)
   @Query("select b from Board b where b.id = :boardId")
   Board findWithPessimisticWriteById(@Param("boardId") Long boardId);
+
 }

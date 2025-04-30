@@ -11,4 +11,5 @@ public interface CustomizedBoardRepository {
       String direction,
       int pageSize
   );
+
 }

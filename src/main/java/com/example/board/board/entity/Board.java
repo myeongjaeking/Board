@@ -53,7 +53,7 @@ public class Board {
   }
 
   public static Board create(String title, String content, String nickname) {
-    return new Board(title,content,nickname);
+    return new Board(title, content, nickname);
   }
 
   public void incrementViewCount() {
@@ -73,8 +73,8 @@ public class Board {
     this.content = content;
   }
 
-  public void validateAccess(String nickname){
-    if(this.nickname.equals(nickname)){
+  public void validateAccess(String nickname) {
+    if (this.nickname.equals(nickname)) {
       throw FORBIDDEN_ACCESS_BOARD.newException();
     }
   }

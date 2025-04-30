@@ -1,11 +1,9 @@
 package com.example.board.board.repository;
 
 import static com.example.board.board.entity.QBoard.board;
-import static com.example.board.board.entity.Sort.TITLE;
 import static com.querydsl.core.types.Projections.constructor;
 
 import com.example.board.board.dto.response.BoardGetResponse;
-import com.example.board.board.entity.QBoard;
 import com.example.board.board.entity.Sort;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Order;

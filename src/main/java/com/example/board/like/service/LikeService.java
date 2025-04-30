@@ -2,7 +2,6 @@ package com.example.board.like.service;
 
 import com.example.board.board.entity.Board;
 import com.example.board.board.service.BoardRepository;
-import com.example.board.global.common.SecurityUtil;
 import com.example.board.like.entity.Likes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
 package com.example.board.board.entity;
 
-import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Order;
+import com.querydsl.core.types.OrderSpecifier;
 
 public enum Sort {
   TITLE {

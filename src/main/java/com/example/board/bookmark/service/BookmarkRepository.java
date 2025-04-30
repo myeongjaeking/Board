@@ -19,7 +19,8 @@ public class BookmarkRepository {
   }
 
   public Bookmark findByBoardId(Long boardId) {
-    return bookmarkJpaRepository.findByBoardId(boardId).orElseThrow(NOT_FOUND_BOOKMARK::newException);
+    return bookmarkJpaRepository.findByBoardId(boardId)
+        .orElseThrow(NOT_FOUND_BOOKMARK::newException);
   }
 
   public void delete(Long boardId, String nickname) {

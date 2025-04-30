@@ -23,7 +23,7 @@ public class SecurityConfig {
 
   private static final String[] ALLOWED_URLS = {
       "/api/token", "/h2-console", "/swagger", "/swagger-ui.html", "/swagger-ui/**", "/api-docs",
-      "/api-docs/**", "/v3/api-docs/**","/api/auth/**"
+      "/api-docs/**", "/v3/api-docs/**", "/api/auth/**"
   };
 
   @Bean
